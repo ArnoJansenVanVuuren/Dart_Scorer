@@ -1,4 +1,9 @@
 <ion-app>
-  <app-navbar></app-navbar>
-  <ion-router-outlet></ion-router-outlet>
+  <app-menu></app-menu>
+  <div class="ion-page" id="main-content">
+    <app-navbar></app-navbar>
+    <ion-content>
+      <ion-router-outlet></ion-router-outlet>
+    </ion-content>
+  </div>
 </ion-app>
