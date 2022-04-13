@@ -1,3 +1,4 @@
+import { PlayersComponent } from './pages/players/players.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -21,6 +22,7 @@ import { WelcomeComponent } from './pages/welcome/welcome.component';
     NavbarComponent,
     WelcomeComponent,
     MenuComponent,
+    PlayersComponent,
   ],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
