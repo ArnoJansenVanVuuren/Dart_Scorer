@@ -1,31 +1,30 @@
-<ion-item>
-  <ion-label>Players</ion-label>
-  <ion-input
-    formControlName="amountOfPlayers"
-    type="number"
-    max="6"
-    min="1"
-    name="playerVal"
-  ></ion-input>
-</ion-item>
-<ion-select
-  name="killerVal"
-  interface="popover"
-  placeholder="Select One"
-  formControlName="killerVal"
-  size="auto"
->
-  <ion-select-option value="301">301</ion-select-option>
-  <ion-select-option value="501">501</ion-select-option>
-  <ion-select-option value="701">701</ion-select-option>
-</ion-select>
-<ion-button>Start</ion-button>
-<ion-grid>
-  <ion-row>
-    <ion-col name="player">
-      <ion-item>
-        <ion-label></ion-label>
-      </ion-item>
-    </ion-col>
-  </ion-row>
-</ion-grid>
+<form [formGroup]="playerGameForm">
+  <ion-item>
+    <ion-label position="floating">Players</ion-label>
+    <ion-input
+      type="number"
+      max="6"
+      min="1"
+      formControlName="playerQty"
+    ></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">Killer Value</ion-label>
+    <ion-select interface="popover" formControlName="killerVal">
+      <ion-select-option value="301">301</ion-select-option>
+      <ion-select-option value="501">501</ion-select-option>
+      <ion-select-option value="701">701</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" size-sm="6" *ngFor="let player of playerArr">
+        <ion-item>
+          <ion-label position="floating" color="primary">Player Name</ion-label>
+          <ion-input>{{ player }}</ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-button [disabled]="!playerGameForm.valid">Start</ion-button>
+</form>
