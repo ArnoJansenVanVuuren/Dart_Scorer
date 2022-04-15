@@ -12,6 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { WelcomeComponent } from './pages/welcome/welcome.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { KillerComponent } from './pages/killer/killer.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     WelcomeComponent,
     MenuComponent,
     PlayersComponent,
+    KillerComponent,
   ],
   entryComponents: [],
   imports: [

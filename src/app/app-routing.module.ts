@@ -1,3 +1,4 @@
+import { KillerComponent } from './pages/killer/killer.component';
 import { PlayersComponent } from './pages/players/players.component';
 import { WelcomeComponent } from './pages/welcome/welcome.component';
 import { NgModule } from '@angular/core';
@@ -11,6 +12,10 @@ const routes: Routes = [
   {
     path: 'players',
     component: PlayersComponent,
+  },
+  {
+    path: 'killer',
+    component: KillerComponent,
   },
   {
     path: '**',
