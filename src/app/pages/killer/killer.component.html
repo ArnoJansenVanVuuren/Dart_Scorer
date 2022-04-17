@@ -1,3 +1,35 @@
 <ion-item color="secondary">
-  <ion-label>KILLER</ion-label>
+  <ion-label><h1>KILLER</h1></ion-label>
 </ion-item>
+<ion-grid>
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label>
+          <h2><strong></strong>Player 1</h2>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary" position="floating">First Throw</ion-label>
+        <ion-input type="number" min="0" max="20"> </ion-input>
+        <ion-item button id="trigger-button">Special Throw</ion-item>
+        <ion-popover trigger="trigger-button">
+          <ng-template>
+            <ion-item button>Double</ion-item>
+            <ion-item button color="primary">Triple</ion-item>
+            <ion-item button color="warning">Bull</ion-item>
+            <ion-item button color="danger">Cherry</ion-item>
+          </ng-template>
+        </ion-popover>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary" position="floating">Second Throw</ion-label>
+        <ion-input> </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary" position="floating">Third Throw</ion-label>
+        <ion-input> </ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+</ion-grid>
