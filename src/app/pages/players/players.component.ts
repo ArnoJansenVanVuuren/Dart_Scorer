@@ -10,30 +10,17 @@ import { Subscription } from 'rxjs';
 export class PlayersComponent implements OnInit, OnDestroy {
   playerGameForm: FormGroup;
   playerArr: string[] = [];
-  killSub: Subscription;
+  availablePlayers: number[] = [1, 2, 3, 4, 5, 6];
 
   constructor(private fb: FormBuilder) {
     this.playerGameForm = this.fb.group({
+      gameType: ['killer', Validators.required],
       playerQty: [null, Validators.required],
       killerVal: [null, Validators.required],
     });
   }
 
-  ngOnInit() {
-    //---subscribe to player QTY changes
-    this.killSub =
-      this.playerGameForm.controls.playerQty.valueChanges.subscribe((val) => {
-        //---clear player array
-        this.playerArr = [];
-        //---add '' for QTY of players
-        for (let i = 0; i < val; i++) {
-          this.playerArr.push('' + i);
-        }
-        console.log(this.playerArr);
-      });
-  }
+  ngOnInit() {}
 
-  ngOnDestroy(): void {
-    this.killSub.unsubscribe();
-  }
+  ngOnDestroy(): void {}
 }
