@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Console } from 'console';
 import { GameInfoI, GameService } from 'src/app/services/game.service';
 
 @Component({
@@ -45,13 +44,15 @@ export class PlayersComponent implements OnInit {
   }
 
   changePlayerQty(qty) {
+    //---<>fix validators
     this.playerGameForm.controls.playerQty.setValue(qty);
     this.availablePlayers.forEach((player) => {
       if (player.id <= qty) {
-        //---Add Validator
+        this.playerGameForm.controls[player.formName].setValidators(
+          Validators.required
+        );
       }
     });
-    console.log(this.availablePlayers);
   }
 
   startGame() {
