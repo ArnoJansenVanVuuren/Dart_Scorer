@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { GameInfoI, GameService } from 'src/app/services/game.service';
@@ -8,7 +8,7 @@ import { GameInfoI, GameService } from 'src/app/services/game.service';
   templateUrl: './players.component.html',
   styleUrls: ['./players.component.scss'],
 })
-export class PlayersComponent implements OnInit {
+export class PlayersComponent {
   playerGameForm: FormGroup;
   playerArr: string[] = [];
   availablePlayers: { id: number; formName: string; validator?: string }[] = [
@@ -48,9 +48,12 @@ export class PlayersComponent implements OnInit {
     this.playerGameForm.controls.playerQty.setValue(qty);
     this.availablePlayers.forEach((player) => {
       if (player.id <= qty) {
-        this.playerGameForm.controls[player.formName].setValidators(
-          Validators.required
-        );
+        (this.playerGameForm.controls.playerNames as FormGroup).controls[
+          player.formName
+        ].setValidators([Validators.required, Validators.minLength(4)]);
+        (this.playerGameForm.controls.playerNames as FormGroup).controls[
+          player.formName
+        ].updateValueAndValidity();
       }
     });
   }
@@ -70,20 +73,15 @@ export class PlayersComponent implements OnInit {
       ], //---<>dynamic way you insert into []
     };
     // after promise set router link
-    this.gameService
-      .gameInfoReceive(gameSendInfo)
-
-      .then(() => {
-        console.log('then', this.gameService.gameInfo);
-        this.router.navigate([
-          this.availableGames.filter(
-            (game) => game.name === this.playerGameForm.value.gameType
-          )[0].path,
-        ]);
-      });
+    this.gameService.gameInfoReceive(gameSendInfo).then(() => {
+      console.log('then', this.gameService.gameInfo);
+      this.router.navigate([
+        this.availableGames.filter(
+          (game) => game.name === this.playerGameForm.value.gameType
+        )[0].path,
+      ]);
+    });
   }
-
-  ngOnInit() {}
 
   test() {
     console.log(this.playerGameForm.value);
