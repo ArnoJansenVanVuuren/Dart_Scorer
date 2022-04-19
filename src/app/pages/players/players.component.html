@@ -61,11 +61,9 @@
         </ion-col>
       </ion-row>
     </ion-grid>
-    <ion-button
-      (click)="startGame()"
-      [disabled]="!playerGameForm.valid"
-      [routerLink]="routerLinkChange"
+    <ion-button (click)="startGame()" [disabled]="!playerGameForm.valid"
       >Start</ion-button
-    >
+    ><br />
+    <ion-button (click)="test()">test</ion-button>
   </form>
 </ion-content>
