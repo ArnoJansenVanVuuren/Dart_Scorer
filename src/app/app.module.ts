@@ -13,7 +13,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { WelcomeComponent } from './pages/welcome/welcome.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { KillerComponent } from './pages/killer/killer.component';
-
+import { DartScoringComponent } from './components/dart-scoring/dart-scoring.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,6 +22,7 @@ import { KillerComponent } from './pages/killer/killer.component';
     MenuComponent,
     PlayersComponent,
     KillerComponent,
+    DartScoringComponent,
   ],
   entryComponents: [],
   imports: [

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Console } from 'console';
 import { GameInfoI, GameService } from 'src/app/services/game.service';
 
 @Component({
@@ -11,13 +12,13 @@ import { GameInfoI, GameService } from 'src/app/services/game.service';
 export class PlayersComponent implements OnInit {
   playerGameForm: FormGroup;
   playerArr: string[] = [];
-  availablePlayers: { id: number; formName: string }[] = [
-    { id: 1, formName: 'player1' },
-    { id: 2, formName: 'player2' },
-    { id: 3, formName: 'player3' },
-    { id: 4, formName: 'player4' },
-    { id: 5, formName: 'player5' },
-    { id: 6, formName: 'player6' },
+  availablePlayers: { id: number; formName: string; validator?: string }[] = [
+    { id: 1, formName: 'player1', validator: null },
+    { id: 2, formName: 'player2', validator: null },
+    { id: 3, formName: 'player3', validator: null },
+    { id: 4, formName: 'player4', validator: null },
+    { id: 5, formName: 'player5', validator: null },
+    { id: 6, formName: 'player6', validator: null },
   ];
   availableGames: { name: string; path: string }[] = [
     { name: 'KILLER', path: '/killer' },
@@ -45,6 +46,12 @@ export class PlayersComponent implements OnInit {
 
   changePlayerQty(qty) {
     this.playerGameForm.controls.playerQty.setValue(qty);
+    this.availablePlayers.forEach((player) => {
+      if (player.id <= qty) {
+        //---Add Validator
+      }
+    });
+    console.log(this.availablePlayers);
   }
 
   startGame() {

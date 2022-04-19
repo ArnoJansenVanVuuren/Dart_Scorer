@@ -20,10 +20,8 @@ export class KillerComponent {
     //get player info
     this.gameInfo = this.gameService.gameInfo;
     if (this.gameInfo && this.gameInfo.playerNames.length !== null) {
-      console.log('ngOnInit:', this.gameService.gameInfo);
       this.gameInfo.playerNames.forEach((name) => {
         if (name) {
-          console.log(name);
           this.playerGameStatus.push({
             name,
             score: +this.gameInfo.gameVariant,
