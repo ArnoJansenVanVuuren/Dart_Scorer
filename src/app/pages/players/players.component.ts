@@ -48,6 +48,7 @@ export class PlayersComponent implements OnInit {
   }
 
   startGame() {
+    const promise = new Promise((resolve, reject) => {});
     const gameSendInfo: GameInfoI = {
       gameType: this.playerGameForm.value.gameType,
       gameVariant: this.playerGameForm.value.gameVariant,
@@ -60,13 +61,18 @@ export class PlayersComponent implements OnInit {
         this.playerGameForm.value.playerNames.player6,
       ], //---<>dynamic way you insert into []
     };
-    this.gameService.gameInfoReceive(gameSendInfo);
-    console.log(this.gameService.gameInfo);
-    this.router.navigate([
-      this.availableGames.filter(
-        (game) => game.name === this.playerGameForm.value.gameType
-      )[0].path,
-    ]);
+    // after promise set router link
+    this.gameService
+      .gameInfoReceive(gameSendInfo)
+
+      .then(() => {
+        console.log('then', this.gameService.gameInfo);
+        this.router.navigate([
+          this.availableGames.filter(
+            (game) => game.name === this.playerGameForm.value.gameType
+          )[0].path,
+        ]);
+      });
   }
 
   ngOnInit() {}

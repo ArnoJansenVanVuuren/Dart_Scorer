@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { GameInfoI, GameService } from 'src/app/services/game.service';
 
@@ -7,7 +7,7 @@ import { GameInfoI, GameService } from 'src/app/services/game.service';
   templateUrl: './killer.component.html',
   styleUrls: ['./killer.component.scss'],
 })
-export class KillerComponent implements OnInit {
+export class KillerComponent {
   gameInfo: GameInfoI;
   playerGameStatus: {
     name: string;
@@ -16,14 +16,12 @@ export class KillerComponent implements OnInit {
   playerNumber = 0;
 
   constructor(private gameService: GameService, private router: Router) {}
-
-  ngOnInit() {
+  ionViewWillEnter() {
     //get player info
-    console.log('ngOnInit:', this.gameService.gameInfo);
     this.gameInfo = this.gameService.gameInfo;
     if (this.gameInfo && this.gameInfo.playerNames.length !== null) {
+      console.log('ngOnInit:', this.gameService.gameInfo);
       this.gameInfo.playerNames.forEach((name) => {
-        //---<>check for null values
         if (name) {
           console.log(name);
           this.playerGameStatus.push({
@@ -37,10 +35,10 @@ export class KillerComponent implements OnInit {
     }
   }
   playerDone() {
-    console.log('playerDone:', this.gameService.gameInfo);
+    console.log('playerDone:', this.playerGameStatus);
     if (
       this.playerGameStatus.length !== 0 &&
-      this.playerNumber < this.gameInfo.playerNames.length - 1
+      this.playerNumber < this.playerGameStatus.length - 1
     ) {
       this.playerNumber++;
     } else {
