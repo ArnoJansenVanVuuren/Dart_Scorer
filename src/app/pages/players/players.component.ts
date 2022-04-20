@@ -44,8 +44,10 @@ export class PlayersComponent {
   }
 
   changePlayerQty(qty) {
-    //---<>fix validators
     this.playerGameForm.controls.playerQty.setValue(qty);
+
+    // set validators for player QTY
+
     this.availablePlayers.forEach((player) => {
       if (player.id <= qty) {
         (this.playerGameForm.controls.playerNames as FormGroup).controls[
@@ -57,6 +59,8 @@ export class PlayersComponent {
       }
     });
   }
+
+  // add all player info and game info into service
 
   startGame() {
     const promise = new Promise((resolve, reject) => {});
@@ -72,7 +76,9 @@ export class PlayersComponent {
         this.playerGameForm.value.playerNames.player6,
       ], //---<>dynamic way you insert into []
     };
+
     // after promise set router link
+
     this.gameService.gameInfoReceive(gameSendInfo).then(() => {
       console.log('then', this.gameService.gameInfo);
       this.router.navigate([
