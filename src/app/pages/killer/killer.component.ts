@@ -22,6 +22,7 @@ export class KillerComponent {
     private router: Router,
     private modalController: ModalController
   ) {}
+
   ionViewWillEnter() {
     //get player info
     this.gameInfo = this.gameService.gameInfo;
@@ -43,7 +44,10 @@ export class KillerComponent {
     const modal = await this.modalController.create({
       component: DartScoringComponent,
     });
-    return await modal.present();
+    await modal.present();
+
+    const { data } = await modal.onWillDismiss();
+    console.log(data);
   }
 
   playerDone() {
