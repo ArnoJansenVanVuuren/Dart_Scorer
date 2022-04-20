@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { ModalController } from '@ionic/angular';
+import { DartScoringComponent } from 'src/app/components/dart-scoring/dart-scoring.component';
 import { GameInfoI, GameService } from 'src/app/services/game.service';
 
 @Component({
@@ -15,7 +17,11 @@ export class KillerComponent {
   }[] = [];
   playerNumber = 0;
 
-  constructor(private gameService: GameService, private router: Router) {}
+  constructor(
+    private gameService: GameService,
+    private router: Router,
+    private modalController: ModalController
+  ) {}
   ionViewWillEnter() {
     //get player info
     this.gameInfo = this.gameService.gameInfo;
@@ -29,9 +35,17 @@ export class KillerComponent {
         }
       });
     } else {
-      this.router.navigate(['players']);
+      // this.router.navigate(['players']);
     }
   }
+
+  async presentModal() {
+    const modal = await this.modalController.create({
+      component: DartScoringComponent,
+    });
+    return await modal.present();
+  }
+
   playerDone() {
     console.log('playerDone:', this.playerGameStatus);
     if (
