@@ -1,0 +1,9 @@
+<ion-grid>
+  <ion-row>
+    <ion-col *ngFor="let scoreButton of scoringValues"
+      ><ion-chip (click)="dismiss(scoreButton.value)">
+        <ion-label>{{ scoreButton.name }}</ion-label>
+      </ion-chip>
+    </ion-col>
+  </ion-row>
+</ion-grid>
