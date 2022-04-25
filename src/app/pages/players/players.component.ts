@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormControl,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { GameInfoI, GameService } from 'src/app/services/game.service';
 
@@ -43,6 +48,12 @@ export class PlayersComponent {
     });
   }
 
+  getPlayerNameControl(player: string): FormControl {
+    return (this.playerGameForm.get('playerNames') as FormGroup).controls[
+      player
+    ] as FormControl;
+  }
+
   changePlayerQty(qty) {
     this.playerGameForm.controls.playerQty.setValue(qty);
 
@@ -50,12 +61,11 @@ export class PlayersComponent {
 
     this.availablePlayers.forEach((player) => {
       if (player.id <= qty) {
-        (this.playerGameForm.controls.playerNames as FormGroup).controls[
-          player.formName
-        ].setValidators([Validators.required, Validators.minLength(4)]);
-        (this.playerGameForm.controls.playerNames as FormGroup).controls[
-          player.formName
-        ].updateValueAndValidity();
+        this.getPlayerNameControl(player.formName).setValidators([
+          Validators.required,
+          Validators.minLength(4),
+        ]);
+        this.getPlayerNameControl(player.formName).updateValueAndValidity();
       }
     });
   }
