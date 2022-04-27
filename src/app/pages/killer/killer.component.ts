@@ -16,7 +16,7 @@ export class KillerComponent {
     score: number;
   }[] = [];
   playerNumber = 0;
-  currentPlayer3DartScores = ['Dart#1', 'Dart#2', 'Dart#3'];
+  currentPlayer3DartScores = [];
 
   constructor(
     private gameService: GameService,
@@ -48,7 +48,9 @@ export class KillerComponent {
     await modal.present();
 
     const { data } = await modal.onWillDismiss();
-    console.log(data);
+    console.log('from modal:', data);
+    this.currentPlayer3DartScores.push(data);
+    console.log(this.currentPlayer3DartScores);
   }
 
   playerDone() {
