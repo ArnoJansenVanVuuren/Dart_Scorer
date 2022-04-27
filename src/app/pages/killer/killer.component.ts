@@ -16,6 +16,7 @@ export class KillerComponent {
     score: number;
   }[] = [];
   playerNumber = 0;
+  currentPlayer3DartScores = ['Dart#1', 'Dart#2', 'Dart#3'];
 
   constructor(
     private gameService: GameService,

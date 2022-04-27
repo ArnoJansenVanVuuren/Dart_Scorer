@@ -1,8 +1,17 @@
 <ion-grid>
   <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label> Select One </ion-label>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
     <ion-col *ngFor="let scoreButton of scoringValues"
       ><ion-chip (click)="dismiss(scoreButton.value)">
-        <ion-label>{{ scoreButton.name }}</ion-label>
+        <ion-label color="primary" outline="false">{{
+          scoreButton.name
+        }}</ion-label>
       </ion-chip>
     </ion-col>
   </ion-row>

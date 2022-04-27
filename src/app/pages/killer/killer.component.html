@@ -20,34 +20,10 @@
       </ion-item>
     </ion-col>
   </ion-row>
-  <ion-row>
+  <ion-row *ngFor="let dart of currentPlayer3DartScores">
     <ion-col>
       <ion-item>
-        <ion-label>Dart #1 </ion-label>
-      </ion-item>
-    </ion-col>
-    <ion-col>
-      <ion-item>
-        <ion-button (click)="presentModal()">Choose</ion-button>
-      </ion-item>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col>
-      <ion-item>
-        <ion-label>Dart #2 </ion-label>
-      </ion-item>
-    </ion-col>
-    <ion-col>
-      <ion-item>
-        <ion-button (click)="presentModal()">Choose</ion-button>
-      </ion-item>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col>
-      <ion-item>
-        <ion-label>Dart #3 </ion-label>
+        <ion-label>{{ dart }}</ion-label>
       </ion-item>
     </ion-col>
     <ion-col>
