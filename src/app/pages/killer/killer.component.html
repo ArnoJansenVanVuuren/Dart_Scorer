@@ -55,7 +55,11 @@
   <ion-row>
     <ion-col>
       <ion-item>
-        <ion-button (click)="playerDone()">Done</ion-button>
+        <ion-button
+          (click)="playerDone()"
+          [disabled]="currentPlayer3DartScores.length < 3"
+          >Done</ion-button
+        >
       </ion-item>
     </ion-col>
   </ion-row>
