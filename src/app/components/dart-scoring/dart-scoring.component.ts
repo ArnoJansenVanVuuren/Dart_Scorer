@@ -11,6 +11,7 @@ export class DartScoringComponent implements OnInit {
 
   constructor(private modalController: ModalController) {}
 
+  //--make sure array dart numbers are populated if not then populate
   ionViewWillEnter() {
     if (this.scoringValues.length === 0) {
       for (let i = 0; i < 21; i++) {

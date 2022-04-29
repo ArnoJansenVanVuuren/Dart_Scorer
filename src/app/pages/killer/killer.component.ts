@@ -25,7 +25,7 @@ export class KillerComponent {
   ) {}
 
   ionViewWillEnter() {
-    //get player info
+    //--get player info
     this.gameInfo = this.gameService.gameInfo;
     if (this.gameInfo && this.gameInfo.playerNames.length !== null) {
       this.gameInfo.playerNames.forEach((name) => {
@@ -37,7 +37,7 @@ export class KillerComponent {
         }
       });
     } else {
-      // this.router.navigate(['players']);
+      //--this.router.navigate(['players']);
     }
   }
 
@@ -50,6 +50,7 @@ export class KillerComponent {
     const { data } = await modal.onWillDismiss();
     console.log('from modal:', data);
     this.currentPlayer3DartScores.push(data);
+    this.playerGameStatus[this.playerNumber].score -= data;
     console.log(this.currentPlayer3DartScores);
   }
 
@@ -63,5 +64,6 @@ export class KillerComponent {
     } else {
       this.playerNumber = 0;
     }
+    this.currentPlayer3DartScores = [];
   }
 }

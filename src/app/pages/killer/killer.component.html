@@ -44,7 +44,11 @@
   <ion-row>
     <ion-col>
       <ion-item>
-        <ion-button (click)="presentModal()">Choose</ion-button>
+        <ion-button
+          (click)="presentModal()"
+          [disabled]="currentPlayer3DartScores.length === 3"
+          >Choose</ion-button
+        >
       </ion-item>
     </ion-col>
   </ion-row>
