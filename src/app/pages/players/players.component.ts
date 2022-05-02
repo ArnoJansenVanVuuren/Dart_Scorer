@@ -47,7 +47,7 @@ export class PlayersComponent {
       }),
     });
   }
-
+  //--<> clear all player data when new game is started
   getPlayerNameControl(player: string): FormControl {
     return (this.playerGameForm.get('playerNames') as FormGroup).controls[
       player
