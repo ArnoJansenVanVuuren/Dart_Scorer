@@ -8,7 +8,7 @@ import { ModalController } from '@ionic/angular';
 })
 export class DartScoringComponent implements OnInit {
   scoringValues: { id: number; name: string | number; value: number }[] = [];
-  selectedValue: any = 0;
+  selectedValue: any;
   constructor(private modalController: ModalController) {}
 
   //--make sure array dart numbers are populated if not then populate
@@ -23,18 +23,21 @@ export class DartScoringComponent implements OnInit {
         { id: 21, name: 'bull', value: 25 },
         { id: 22, name: 'cherry', value: 50 }
       );
-      console.log(this.scoringValues);
+      console.log(this.scoringValues, this.selectedValue);
     }
   }
 
   ngOnInit() {}
 
   valueSelected(value) {
+    this.selectedValue = 0;
     this.selectedValue = value;
     console.log('selected', this.selectedValue);
   }
+
+  //--<> add check value is not zero or undefined
   dismiss(value) {
-    this.selectedValue = this.selectedValue * value;
+    this.selectedValue *= value;
     this.modalController.dismiss(this.selectedValue);
   }
 }
