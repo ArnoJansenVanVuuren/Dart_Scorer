@@ -1,18 +1,31 @@
-<ion-grid>
-  <ion-row>
-    <ion-col>
-      <ion-item>
-        <ion-label> Select One </ion-label>
-      </ion-item>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col *ngFor="let scoreButton of scoringValues"
-      ><ion-chip (click)="dismiss(scoreButton.value)">
-        <ion-label color="primary" outline="false">{{
-          scoreButton.name
-        }}</ion-label>
-      </ion-chip>
-    </ion-col>
-  </ion-row>
-</ion-grid>
+<ion-card>
+  <ion-card-header><h1>Please Select</h1></ion-card-header>
+  <ion-grid>
+    <ion-row>
+      <!-- <ionic-template *ngIf="selectedValue === 2"> -->
+      <ion-col *ngFor="let scoreButton of scoringValues"
+        ><ion-chip (click)="valueSelected(scoreButton.value)">
+          <ion-label color="primary" outline="false">{{
+            scoreButton.name
+          }}</ion-label>
+        </ion-chip>
+      </ion-col>
+      <!-- </ionic-template> -->
+      <ion-col
+        ><ion-chip (click)="dismiss(1)">
+          <ion-label color="primary" outline="false">Single</ion-label>
+        </ion-chip>
+      </ion-col>
+      <ion-col
+        ><ion-chip (click)="dismiss(2)">
+          <ion-label color="primary" outline="false">Dubble</ion-label>
+        </ion-chip>
+      </ion-col>
+      <ion-col
+        ><ion-chip (click)="dismiss(3)">
+          <ion-label color="primary" outline="false">Tripple</ion-label>
+        </ion-chip>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-card>
