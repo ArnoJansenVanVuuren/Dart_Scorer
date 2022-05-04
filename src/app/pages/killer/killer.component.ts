@@ -41,6 +41,8 @@ export class KillerComponent {
     }
   }
 
+  //--<> add button to remove one of the selections
+
   async presentModal() {
     const modal = await this.modalController.create({
       component: DartScoringComponent,
