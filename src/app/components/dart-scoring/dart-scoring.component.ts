@@ -39,9 +39,10 @@ export class DartScoringComponent implements OnInit {
 
   //--<> add check value is not zero or undefined
   dismiss(value) {
-    if (this.selectedValue >= 0) {
+    if (this.selectedValue > 20) {
+    } else if (this.selectedValue >= 0) {
       this.selectedValue *= value;
-      this.modalController.dismiss(this.selectedValue);
     }
+    this.modalController.dismiss(this.selectedValue);
   }
 }

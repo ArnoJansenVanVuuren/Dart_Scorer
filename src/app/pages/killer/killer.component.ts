@@ -51,9 +51,24 @@ export class KillerComponent {
 
     const { data } = await modal.onWillDismiss();
     console.log('from modal:', data);
-    this.currentPlayer3DartScores.push(data);
-    this.playerGameStatus[this.playerNumber].score -= data;
-    console.log(this.currentPlayer3DartScores);
+
+    //--<> this only works on the second go after the score was already < 0
+
+    if ((this.playerGameStatus[this.playerNumber].score -= data) < 0) {
+      const dartSum = this.currentPlayer3DartScores.reduce(
+        (sumValue, currentValue) => {
+          return sumValue + currentValue;
+        },
+        0
+      );
+      console.log('dartsum:', dartSum);
+      this.playerGameStatus[this.playerNumber].score += dartSum;
+      this.playerDone();
+    } else {
+      this.currentPlayer3DartScores.push(data);
+      this.playerGameStatus[this.playerNumber].score -= data;
+      console.log(this.currentPlayer3DartScores);
+    }
   }
 
   playerDone() {
