@@ -5,7 +5,7 @@
       <ion-col *ngFor="let scoreButton of scoringValues"
         ><ion-chip
           (click)="valueSelected(scoreButton.value)"
-          [disabled]="selectedValue >= 0"
+          [disabled]="selectedValue != null"
         >
           <ion-label color="primary" outline="false">{{
             scoreButton.name
@@ -18,17 +18,17 @@
   <ion-grid>
     <ion-row
       ><ion-col>
-        <ion-chip (click)="dismiss(1)">
+        <ion-chip (click)="multiply(1)">
           <ion-label color="primary" outline="false">Single</ion-label>
         </ion-chip>
       </ion-col>
       <ion-col
-        ><ion-chip (click)="dismiss(2)">
+        ><ion-chip (click)="multiply(2)">
           <ion-label color="primary" outline="false">Dubble</ion-label>
         </ion-chip>
       </ion-col>
       <ion-col
-        ><ion-chip (click)="dismiss(3)">
+        ><ion-chip (click)="multiply(3)">
           <ion-label color="primary" outline="false">Tripple</ion-label>
         </ion-chip>
       </ion-col>

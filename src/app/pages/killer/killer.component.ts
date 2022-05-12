@@ -17,6 +17,7 @@ export class KillerComponent {
   }[] = [];
   playerNumber = 0;
   currentPlayer3DartScores = [];
+  currentPlayerPreviousScore;
 
   constructor(
     private gameService: GameService,
@@ -37,8 +38,16 @@ export class KillerComponent {
         }
       });
     } else {
+      this.playerGameStatus = [
+        {
+          name: 'arno',
+          score: 301,
+        },
+      ];
       //--this.router.navigate(['players']);
     }
+    this.currentPlayerPreviousScore =
+      this.playerGameStatus[this.playerNumber].score;
   }
 
   //--<> add button to remove one of the selections
@@ -54,25 +63,21 @@ export class KillerComponent {
 
     //--<> this only works on the second go after the score was already < 0
 
-    if ((this.playerGameStatus[this.playerNumber].score -= data) < 0) {
-      const dartSum = this.currentPlayer3DartScores.reduce(
-        (sumValue, currentValue) => {
-          return sumValue + currentValue;
-        },
-        0
-      );
-      console.log('dartsum:', dartSum);
-      this.playerGameStatus[this.playerNumber].score += dartSum;
+    this.currentPlayer3DartScores.push(data);
+
+    if ((this.playerGameStatus[this.playerNumber].score -= data) < 2) {
+      this.playerGameStatus[this.playerNumber].score =
+        this.currentPlayerPreviousScore;
       this.playerDone();
     } else {
-      this.currentPlayer3DartScores.push(data);
       this.playerGameStatus[this.playerNumber].score -= data;
       console.log(this.currentPlayer3DartScores);
     }
   }
 
+  //-- cycle through single players
+
   playerDone() {
-    console.log('playerDone:', this.playerGameStatus);
     if (
       this.playerGameStatus.length !== 0 &&
       this.playerNumber < this.playerGameStatus.length - 1

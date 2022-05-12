@@ -13,6 +13,7 @@ export class DartScoringComponent implements OnInit {
 
   //--make sure array dart numbers are populated if not then populate
   ionViewWillEnter() {
+    this.selectedValue = null;
     if (this.scoringValues.length === 0) {
       this.scoringValues.push({ id: 0, name: 'miss', value: 0 });
 
@@ -23,7 +24,6 @@ export class DartScoringComponent implements OnInit {
         { id: 21, name: 'bull', value: 25 },
         { id: 22, name: 'cherry', value: 50 }
       );
-      console.log(this.scoringValues, this.selectedValue);
     }
   }
 
@@ -31,18 +31,21 @@ export class DartScoringComponent implements OnInit {
 
   valueSelected(value) {
     this.selectedValue = value;
-    console.log('selected', this.selectedValue);
+
     if (this.selectedValue === 0 || this.selectedValue > 20) {
       this.modalController.dismiss(this.selectedValue);
     }
+    console.log('selected', this.selectedValue);
   }
 
   //--<> add check value is not zero or undefined
-  dismiss(value) {
-    if (this.selectedValue > 20) {
-    } else if (this.selectedValue >= 0) {
+  multiply(value) {
+    if (this.selectedValue >= 0) {
+      console.log(value);
       this.selectedValue *= value;
+      console.log('multiply', this.selectedValue);
     }
     this.modalController.dismiss(this.selectedValue);
+    console.log('dismiss', this.selectedValue);
   }
 }
