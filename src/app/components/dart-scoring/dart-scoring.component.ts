@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
 @Component({
@@ -6,7 +6,7 @@ import { ModalController } from '@ionic/angular';
   templateUrl: './dart-scoring.component.html',
   styleUrls: ['./dart-scoring.component.scss'],
 })
-export class DartScoringComponent implements OnInit {
+export class DartScoringComponent {
   scoringValues: { id: number; name: string | number; value: number }[] = [];
   selectedValue: any;
   constructor(private modalController: ModalController) {}
@@ -27,8 +27,6 @@ export class DartScoringComponent implements OnInit {
     }
   }
 
-  ngOnInit() {}
-
   valueSelected(value) {
     this.selectedValue = value;
 
@@ -38,13 +36,10 @@ export class DartScoringComponent implements OnInit {
     console.log('selected', this.selectedValue);
   }
 
-  //--<> add check value is not zero or undefined
-  multiply(value) {
-    if (this.selectedValue >= 0) {
-      console.log(value);
-      this.selectedValue *= value;
-      console.log('multiply', this.selectedValue);
-    }
+  multiply(times) {
+    console.log('times', times);
+    this.selectedValue = this.selectedValue * times;
+    console.log('multiply', this.selectedValue);
     this.modalController.dismiss(this.selectedValue);
     console.log('dismiss', this.selectedValue);
   }
