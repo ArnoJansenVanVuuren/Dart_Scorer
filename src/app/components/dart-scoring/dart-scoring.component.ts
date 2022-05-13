@@ -12,6 +12,7 @@ export class DartScoringComponent {
   constructor(private modalController: ModalController) {}
 
   //--make sure array dart numbers are populated if not then populate
+
   ionViewWillEnter() {
     this.selectedValue = null;
     if (this.scoringValues.length === 0) {
@@ -29,18 +30,13 @@ export class DartScoringComponent {
 
   valueSelected(value) {
     this.selectedValue = value;
-
     if (this.selectedValue === 0 || this.selectedValue > 20) {
       this.modalController.dismiss(this.selectedValue);
     }
-    console.log('selected', this.selectedValue);
   }
 
   multiply(times) {
-    console.log('times', times);
-    this.selectedValue = this.selectedValue * times;
-    console.log('multiply', this.selectedValue);
+    this.selectedValue *= times;
     this.modalController.dismiss(this.selectedValue);
-    console.log('dismiss', this.selectedValue);
   }
 }

@@ -15,20 +15,23 @@
     </ion-row>
   </ion-grid>
   <ion-card-header><h1>Please select one</h1></ion-card-header>
+
+  <!-- dissable if no value selcted -->
+
   <ion-grid>
     <ion-row
       ><ion-col>
-        <ion-chip (click)="multiply(1)">
+        <ion-chip (click)="multiply(1)" [disabled]="selectedValue === null">
           <ion-label color="primary" outline="false">Single</ion-label>
         </ion-chip>
       </ion-col>
       <ion-col
-        ><ion-chip (click)="multiply(2)">
+        ><ion-chip (click)="multiply(2)" [disabled]="selectedValue === null">
           <ion-label color="primary" outline="false">Dubble</ion-label>
         </ion-chip>
       </ion-col>
       <ion-col
-        ><ion-chip (click)="multiply(3)">
+        ><ion-chip (click)="multiply(3)" [disabled]="selectedValue === null">
           <ion-label color="primary" outline="false">Tripple</ion-label>
         </ion-chip>
       </ion-col>

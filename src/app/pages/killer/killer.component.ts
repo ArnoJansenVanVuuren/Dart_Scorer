@@ -27,6 +27,7 @@ export class KillerComponent {
 
   ionViewWillEnter() {
     //--get player info
+
     this.gameInfo = this.gameService.gameInfo;
     if (this.gameInfo && this.gameInfo.playerNames.length !== null) {
       this.gameInfo.playerNames.forEach((name) => {
@@ -37,7 +38,10 @@ export class KillerComponent {
           });
         }
       });
-    } else {
+    }
+
+    //-- if no player rout back to select player
+    else {
       this.playerGameStatus = [
         {
           name: 'arno',
@@ -65,7 +69,7 @@ export class KillerComponent {
 
     this.currentPlayer3DartScores.push(data);
 
-    if ((this.playerGameStatus[this.playerNumber].score -= data) < 2) {
+    if (this.playerGameStatus[this.playerNumber].score - data < 2) {
       this.playerGameStatus[this.playerNumber].score =
         this.currentPlayerPreviousScore;
       this.playerDone();
