@@ -17,7 +17,7 @@ export class KillerComponent {
   }[] = [];
   playerNumber = 0;
   currentPlayer3DartScores = [];
-  currentPlayerPreviousScore;
+  currentPlayerPreviousScore: number;
 
   constructor(
     private gameService: GameService,
@@ -45,7 +45,7 @@ export class KillerComponent {
       this.playerGameStatus = [
         {
           name: 'arno',
-          score: 301,
+          score: 80,
         },
       ];
       //--this.router.navigate(['players']);
@@ -61,21 +61,27 @@ export class KillerComponent {
       component: DartScoringComponent,
     });
     await modal.present();
-
     const { data } = await modal.onWillDismiss();
-    console.log('from modal:', data);
+    console.log('from modal', data);
 
-    //--<> this only works on the second go after the score was already < 0
-
-    this.currentPlayer3DartScores.push(data);
-
-    if (this.playerGameStatus[this.playerNumber].score - data < 2) {
+    this.currentPlayer3DartScores.push(data.value);
+    if (
+      this.playerGameStatus[this.playerNumber].score - data.value === 0 &&
+      data.doubleCheck == true
+    ) {
+      console.log('true first if');
+      this.router.navigate(['players']);
+    } else if (
+      this.playerGameStatus[this.playerNumber].score - data.value <
+      2
+    ) {
       this.playerGameStatus[this.playerNumber].score =
         this.currentPlayerPreviousScore;
       this.playerDone();
+      console.log('true second if');
     } else {
-      this.playerGameStatus[this.playerNumber].score -= data;
-      console.log(this.currentPlayer3DartScores);
+      this.playerGameStatus[this.playerNumber].score -= data.value;
+      console.log('true else');
     }
   }
 

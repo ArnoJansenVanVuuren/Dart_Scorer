@@ -31,12 +31,24 @@ export class DartScoringComponent {
   valueSelected(value) {
     this.selectedValue = value;
     if (this.selectedValue === 0 || this.selectedValue > 20) {
-      this.modalController.dismiss(this.selectedValue);
+      this.modalController.dismiss({
+        value: this.selectedValue,
+        doubleCheck: false,
+      });
     }
   }
 
-  multiply(times) {
-    this.selectedValue *= times;
-    this.modalController.dismiss(this.selectedValue);
+  multiply(value) {
+    let double;
+    this.selectedValue *= value;
+    if (value === 2) {
+      double = true;
+    } else {
+      double = false;
+    }
+    this.modalController.dismiss({
+      value: this.selectedValue,
+      doubleCheck: double,
+    });
   }
 }
