@@ -1,20 +1,33 @@
 <div class="ion-align-self-center" size="auto">
   <ion-card class="ion-text-center">
     <ion-card-header color="secondary"> KILLER </ion-card-header>
-    <ion-card-content>
-      {{ playerGameStatus[playerNumber]?.name }}
-    </ion-card-content>
+    <ion-card-header color="tertiary"
+      ><strong>{{ playerGameStatus[playerNumber]?.name | uppercase }}</strong>
+    </ion-card-header>
     <ion-card-content>
       <strong>{{ playerGameStatus[playerNumber]?.score }}</strong>
     </ion-card-content>
     <ion-card-content>
       <ion-label>Dart #1 : {{ currentPlayer3DartScores[0] }}</ion-label>
     </ion-card-content>
+    <ion-card-content *ngIf="currentPlayer3DartScores[0] != null">
+      <ion-chip color="danger" (click)="deleteFromArray(0)"> Delete </ion-chip>
+    </ion-card-content>
     <ion-card-content>
       <ion-label>Dart #2 : {{ currentPlayer3DartScores[1] }}</ion-label>
+      <ion-card-content *ngIf="currentPlayer3DartScores[1] != null">
+        <ion-chip color="danger" (click)="deleteFromArray(1)">
+          Delete
+        </ion-chip>
+      </ion-card-content>
     </ion-card-content>
     <ion-card-content>
       <ion-label>Dart #3 : {{ currentPlayer3DartScores[2] }}</ion-label>
+      <ion-card-content *ngIf="currentPlayer3DartScores[2] != null">
+        <ion-chip color="danger" (click)="deleteFromArray(2)">
+          Delete
+        </ion-chip>
+      </ion-card-content>
     </ion-card-content>
     <ion-card-content>
       <ion-button

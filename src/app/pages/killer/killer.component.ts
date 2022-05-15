@@ -62,14 +62,12 @@ export class KillerComponent {
     });
     await modal.present();
     const { data } = await modal.onWillDismiss();
-    console.log('from modal', data);
 
     this.currentPlayer3DartScores.push(data.value);
     if (
       this.playerGameStatus[this.playerNumber].score - data.value === 0 &&
       data.doubleCheck == true
     ) {
-      console.log('true first if');
       this.router.navigate(['players']);
     } else if (
       this.playerGameStatus[this.playerNumber].score - data.value <
@@ -78,10 +76,8 @@ export class KillerComponent {
       this.playerGameStatus[this.playerNumber].score =
         this.currentPlayerPreviousScore;
       this.playerDone();
-      console.log('true second if');
     } else {
       this.playerGameStatus[this.playerNumber].score -= data.value;
-      console.log('true else');
     }
   }
 
@@ -97,5 +93,9 @@ export class KillerComponent {
       this.playerNumber = 0;
     }
     this.currentPlayer3DartScores = [];
+  }
+
+  deleteFromArray(value) {
+    this.currentPlayer3DartScores.splice(value, 1);
   }
 }
