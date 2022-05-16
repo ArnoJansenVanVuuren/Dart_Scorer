@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { DartScoringComponent } from 'src/app/components/dart-scoring/dart-scoring.component';
 import { GameInfoI, GameService } from 'src/app/services/game.service';
 
@@ -22,7 +22,8 @@ export class KillerComponent {
   constructor(
     private gameService: GameService,
     private router: Router,
-    private modalController: ModalController
+    private modalController: ModalController,
+    public toastController: ToastController
   ) {}
 
   ionViewWillEnter() {
@@ -55,7 +56,15 @@ export class KillerComponent {
   }
 
   //--<> add button to remove one of the selections
-
+  async presentToast(value) {
+    const toast = await this.toastController.create({
+      message: 'Sorry ' + value + ' you BUSTED',
+      duration: 2500,
+      position: 'top',
+      color: 'danger',
+    });
+    toast.present();
+  }
   async presentModal() {
     const modal = await this.modalController.create({
       component: DartScoringComponent,
@@ -75,6 +84,7 @@ export class KillerComponent {
     ) {
       this.playerGameStatus[this.playerNumber].score =
         this.currentPlayerPreviousScore;
+      this.presentToast(this.playerGameStatus[this.playerNumber].name);
       this.playerDone();
     } else {
       this.playerGameStatus[this.playerNumber].score -= data.value;
