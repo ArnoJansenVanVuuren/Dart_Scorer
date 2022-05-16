@@ -96,6 +96,8 @@ export class KillerComponent {
   }
 
   deleteFromArray(value) {
+    this.playerGameStatus[this.playerNumber].score +=
+      this.currentPlayer3DartScores[value];
     this.currentPlayer3DartScores.splice(value, 1);
   }
 }

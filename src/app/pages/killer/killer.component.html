@@ -4,9 +4,9 @@
     <ion-card-header color="tertiary"
       ><strong>{{ playerGameStatus[playerNumber]?.name | uppercase }}</strong>
     </ion-card-header>
-    <ion-card-content>
-      <strong>{{ playerGameStatus[playerNumber]?.score }}</strong>
-    </ion-card-content>
+    <ion-card-header color="medium">
+      <strong>Score left: {{ playerGameStatus[playerNumber]?.score }}</strong>
+    </ion-card-header>
     <ion-card-content>
       <ion-label>Dart #1 : {{ currentPlayer3DartScores[0] }}</ion-label>
     </ion-card-content>
