@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
@@ -13,7 +13,7 @@ import { GameInfoI, GameService } from 'src/app/services/game.service';
   templateUrl: './players.component.html',
   styleUrls: ['./players.component.scss'],
 })
-export class PlayersComponent {
+export class PlayersComponent implements OnInit {
   playerGameForm: FormGroup;
   playerArr: string[] = [];
   availablePlayers: { id: number; formName: string; validator?: string }[] = [
@@ -47,7 +47,10 @@ export class PlayersComponent {
       }),
     });
   }
-  //--<> clear all player data when new game is started
+  ngOnInit(): void {
+    //--<> clear all player data when new game is started
+  }
+
   getPlayerNameControl(player: string): FormControl {
     return (this.playerGameForm.get('playerNames') as FormGroup).controls[
       player
@@ -90,16 +93,11 @@ export class PlayersComponent {
     // after promise set router link
 
     this.gameService.gameInfoReceive(gameSendInfo).then(() => {
-      console.log('then', this.gameService.gameInfo);
       this.router.navigate([
         this.availableGames.filter(
           (game) => game.name === this.playerGameForm.value.gameType
         )[0].path,
       ]);
     });
-  }
-
-  test() {
-    console.log(this.playerGameForm.value);
   }
 }

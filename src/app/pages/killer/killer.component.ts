@@ -18,6 +18,7 @@ export class KillerComponent {
   playerNumber = 0;
   currentPlayer3DartScores = [];
   currentPlayerPreviousScore: number;
+  toastSelection: string;
 
   constructor(
     private gameService: GameService,
@@ -49,21 +50,45 @@ export class KillerComponent {
           score: 80,
         },
       ];
-      //--this.router.navigate(['players']);
+      //this.router.navigate(['players']);
     }
     this.currentPlayerPreviousScore =
       this.playerGameStatus[this.playerNumber].score;
   }
 
-  //--<> add button to remove one of the selections
   async presentToast(value) {
-    const toast = await this.toastController.create({
-      message: 'Sorry ' + value + ' you BUSTED',
-      duration: 2500,
-      position: 'top',
-      color: 'danger',
-    });
-    toast.present();
+    if (this.toastSelection === 'bust') {
+      const toast = await this.toastController.create({
+        message: 'Sorry ' + value + ' you BUSTED',
+        duration: 2500,
+        position: 'top',
+        color: 'danger',
+      });
+      toast.present();
+    } else if (this.toastSelection === 'win') {
+      const toast = await this.toastController.create({
+        message: value + ' is the WINNER!',
+        position: 'top',
+        color: 'success',
+        buttons: [
+          {
+            side: 'end',
+            text: 'New Game',
+            handler: () => {
+              this.router.navigate(['players']);
+            },
+          },
+          {
+            text: 'Done',
+            role: 'cancel',
+            handler: () => {
+              this.router.navigate(['welcome']);
+            },
+          },
+        ],
+      });
+      toast.present();
+    }
   }
   async presentModal() {
     const modal = await this.modalController.create({
@@ -77,13 +102,16 @@ export class KillerComponent {
       this.playerGameStatus[this.playerNumber].score - data.value === 0 &&
       data.doubleCheck == true
     ) {
-      this.router.navigate(['players']);
+      this.playerGameStatus[this.playerNumber].score -= data.value;
+      this.toastSelection = 'win';
+      this.presentToast(this.playerGameStatus[this.playerNumber].name);
     } else if (
       this.playerGameStatus[this.playerNumber].score - data.value <
       2
     ) {
       this.playerGameStatus[this.playerNumber].score =
         this.currentPlayerPreviousScore;
+      this.toastSelection = 'bust';
       this.presentToast(this.playerGameStatus[this.playerNumber].name);
       this.playerDone();
     } else {
