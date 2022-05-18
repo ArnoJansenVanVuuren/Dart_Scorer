@@ -17,7 +17,6 @@ export class GameService {
   gameInfoReceive(info: GameInfoI): Promise<void> {
     return new Promise((resolve) => {
       this.gameInfo = info;
-      console.log('gameInfoReceive', info);
       resolve();
     });
   }

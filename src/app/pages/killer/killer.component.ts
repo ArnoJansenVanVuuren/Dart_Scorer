@@ -10,15 +10,14 @@ import { GameInfoI, GameService } from 'src/app/services/game.service';
   styleUrls: ['./killer.component.scss'],
 })
 export class KillerComponent {
-  gameInfo: GameInfoI;
   playerGameStatus: {
     name: string;
     score: number;
   }[] = [];
   playerNumber = 0;
   currentPlayer3DartScores = [];
-  currentPlayerPreviousScore: number;
-  toastSelection: string;
+  currentPlayerPreviousScore?: number;
+  toastSelection?: string;
 
   constructor(
     private gameService: GameService,
@@ -28,35 +27,24 @@ export class KillerComponent {
   ) {}
 
   ionViewWillEnter() {
-    //--get player info
+    //-- if no player route back to select player
+    if (!this.gameService.gameInfo) {
+      this.router.navigate(['players']);
+    }
 
-    this.gameInfo = this.gameService.gameInfo;
-    if (this.gameInfo && this.gameInfo.playerNames.length !== null) {
-      this.gameInfo.playerNames.forEach((name) => {
-        if (name) {
-          this.playerGameStatus.push({
-            name,
-            score: +this.gameInfo.gameVariant,
-          });
-        }
+    //-- get player info
+    this.gameService.gameInfo.playerNames.forEach((name) => {
+      this.playerGameStatus.push({
+        name,
+        score: +this.gameService.gameInfo.gameVariant,
       });
-    }
+    });
 
-    //-- if no player rout back to select player
-    else {
-      this.playerGameStatus = [
-        {
-          name: 'arno',
-          score: 80,
-        },
-      ];
-      //this.router.navigate(['players']);
-    }
     this.currentPlayerPreviousScore =
       this.playerGameStatus[this.playerNumber].score;
   }
 
-  async presentToast(value) {
+  async presentToast(value: string) {
     if (this.toastSelection === 'bust') {
       const toast = await this.toastController.create({
         message: 'Sorry ' + value + ' you BUSTED',
@@ -133,7 +121,7 @@ export class KillerComponent {
     this.currentPlayer3DartScores = [];
   }
 
-  deleteFromArray(value) {
+  deleteFromArray(value: number) {
     this.playerGameStatus[this.playerNumber].score +=
       this.currentPlayer3DartScores[value];
     this.currentPlayer3DartScores.splice(value, 1);
