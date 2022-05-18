@@ -15,8 +15,8 @@ export class KillerComponent {
     score: number;
   }[] = [];
   playerNumber = 0;
-  currentPlayer3DartScores = [];
-  currentPlayerPreviousScore?: number;
+  currentPlayer3DartScores: number[] = [];
+  currentPlayerPreviousScore: number = 0;
   toastSelection?: string;
 
   constructor(

@@ -1,42 +1,37 @@
 <div class="ion-align-self-center" size="auto">
   <ion-card class="ion-text-center">
-    <ion-card-header color="secondary"> KILLER </ion-card-header>
-    <ion-card-header color="tertiary"
-      ><strong>{{ playerGameStatus[playerNumber]?.name | uppercase }}</strong>
+    <ion-card-header color="secondary">
+      <ion-card-subtitle>KILLER</ion-card-subtitle>
+      <ion-card-title>
+        <strong>{{ playerGameStatus[playerNumber]?.name | uppercase }}</strong>
+      </ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <ion-label>Dart #1 : {{ currentPlayer3DartScores[0] }}</ion-label>
-    </ion-card-content>
-    <ion-card-content *ngIf="currentPlayer3DartScores[0] != null">
-      <ion-chip color="danger" (click)="deleteFromArray(0)"> Delete </ion-chip>
-    </ion-card-content>
-    <ion-card-content>
-      <ion-label>Dart #2 : {{ currentPlayer3DartScores[1] }}</ion-label>
-      <ion-card-content *ngIf="currentPlayer3DartScores[1] != null">
-        <ion-chip color="danger" (click)="deleteFromArray(1)">
+      <!-- //--<> add content into grid -->
+      <div *ngFor="let i of [0, 1, 2]">
+        <ion-label
+          >Dart #{{ i + 1 }} : {{ currentPlayer3DartScores[i] }}
+        </ion-label>
+        <ion-chip
+          *ngIf="currentPlayer3DartScores[i] != null"
+          color="danger"
+          (click)="deleteFromArray(i)"
+        >
           Delete
         </ion-chip>
-      </ion-card-content>
-    </ion-card-content>
-    <ion-card-content>
-      <ion-label>Dart #3 : {{ currentPlayer3DartScores[2] }}</ion-label>
-      <ion-card-content *ngIf="currentPlayer3DartScores[2] != null">
-        <ion-chip color="danger" (click)="deleteFromArray(2)">
-          Delete
-        </ion-chip>
-      </ion-card-content>
-    </ion-card-content>
-    <ion-card-header color="medium">
-      <strong>Score left: {{ playerGameStatus[playerNumber]?.score }}</strong>
-    </ion-card-header>
-    <ion-card-content>
+      </div>
+      <!-- interface buttons -->
+      <ion-label class="ion-padding">
+        <strong>
+          Score left: {{ playerGameStatus[playerNumber]?.score }}</strong
+        >
+      </ion-label>
+      <br />
       <ion-button
         (click)="presentModal()"
         [disabled]="currentPlayer3DartScores.length === 3"
         >Choose</ion-button
       >
-    </ion-card-content>
-    <ion-card-content>
       <ion-button
         (click)="playerDone()"
         [disabled]="currentPlayer3DartScores.length < 3"
