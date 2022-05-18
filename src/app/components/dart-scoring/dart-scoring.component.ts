@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
+export interface ScoreI {
+  value: number;
+  doubleCheck: boolean;
+}
+
 @Component({
   selector: 'app-dart-scoring',
   templateUrl: './dart-scoring.component.html',
@@ -31,7 +36,7 @@ export class DartScoringComponent {
   valueSelected(value) {
     this.selectedValue = value;
     if (this.selectedValue === 0 || this.selectedValue > 20) {
-      this.modalController.dismiss({
+      this.modalDismiss({
         value: this.selectedValue,
         doubleCheck: false,
       });
@@ -46,9 +51,13 @@ export class DartScoringComponent {
     } else {
       double = false;
     }
-    this.modalController.dismiss({
+    this.modalDismiss({
       value: this.selectedValue,
       doubleCheck: double,
     });
+  }
+
+  modalDismiss(value: ScoreI) {
+    this.modalController.dismiss(value);
   }
 }

@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController, ToastController } from '@ionic/angular';
-import { DartScoringComponent } from 'src/app/components/dart-scoring/dart-scoring.component';
+import {
+  DartScoringComponent,
+  ScoreI,
+} from 'src/app/components/dart-scoring/dart-scoring.component';
 import { GameInfoI, GameService } from 'src/app/services/game.service';
 
 @Component({
@@ -34,10 +37,12 @@ export class KillerComponent {
 
     //-- get player info
     this.gameService.gameInfo.playerNames.forEach((name) => {
-      this.playerGameStatus.push({
-        name,
-        score: +this.gameService.gameInfo.gameVariant,
-      });
+      if (name) {
+        this.playerGameStatus.push({
+          name,
+          score: +this.gameService.gameInfo.gameVariant,
+        });
+      }
     });
 
     this.currentPlayerPreviousScore =
@@ -78,13 +83,17 @@ export class KillerComponent {
       toast.present();
     }
   }
-  async presentModal() {
+  async showDartSelection() {
     const modal = await this.modalController.create({
       component: DartScoringComponent,
     });
     await modal.present();
     const { data } = await modal.onWillDismiss();
 
+    this.processDartSelection(data as ScoreI);
+  }
+
+  processDartSelection(data: ScoreI) {
     this.currentPlayer3DartScores.push(data.value);
     if (
       this.playerGameStatus[this.playerNumber].score - data.value === 0 &&
