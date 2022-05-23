@@ -31,12 +31,12 @@ export class KillerComponent {
 
   ionViewWillEnter() {
     //-- if no player route back to select player
-    if (!this.gameService.gameInfo) {
+    if (!this.gameService?.gameInfo) {
       this.router.navigate(['players']);
     }
 
     //-- get player info
-    this.gameService.gameInfo.playerNames.forEach((name) => {
+    this.gameService.gameInfo?.playerNames.forEach((name) => {
       if (name) {
         this.playerGameStatus.push({
           name,
@@ -46,7 +46,7 @@ export class KillerComponent {
     });
 
     this.currentPlayerPreviousScore =
-      this.playerGameStatus[this.playerNumber].score;
+      this.playerGameStatus[this.playerNumber]?.score;
   }
 
   async presentToast(value: string) {

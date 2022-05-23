@@ -33,7 +33,7 @@ export class DartScoringComponent {
     }
   }
 
-  valueSelected(value) {
+  valueSelected(value: number) {
     this.selectedValue = value;
     if (this.selectedValue === 0 || this.selectedValue > 20) {
       this.modalDismiss({
@@ -43,7 +43,7 @@ export class DartScoringComponent {
     }
   }
 
-  multiply(value) {
+  multiply(value: number) {
     let double;
     this.selectedValue *= value;
     if (value === 2) {

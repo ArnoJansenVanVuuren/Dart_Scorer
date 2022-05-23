@@ -11,7 +11,7 @@ export interface GameInfoI {
   providedIn: 'root',
 })
 export class GameService {
-  gameInfo: GameInfoI;
+  gameInfo!: GameInfoI;
   constructor() {}
 
   gameInfoReceive(info: GameInfoI): Promise<void> {

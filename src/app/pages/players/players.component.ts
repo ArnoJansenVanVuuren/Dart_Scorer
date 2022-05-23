@@ -17,12 +17,12 @@ export class PlayersComponent implements OnInit {
   playerGameForm: FormGroup;
   playerArr: string[] = [];
   availablePlayers: { id: number; formName: string; validator?: string }[] = [
-    { id: 1, formName: 'player1', validator: null },
-    { id: 2, formName: 'player2', validator: null },
-    { id: 3, formName: 'player3', validator: null },
-    { id: 4, formName: 'player4', validator: null },
-    { id: 5, formName: 'player5', validator: null },
-    { id: 6, formName: 'player6', validator: null },
+    { id: 1, formName: 'player1', validator: '' },
+    { id: 2, formName: 'player2', validator: '' },
+    { id: 3, formName: 'player3', validator: '' },
+    { id: 4, formName: 'player4', validator: '' },
+    { id: 5, formName: 'player5', validator: '' },
+    { id: 6, formName: 'player6', validator: '' },
   ];
   availableGames: { name: string; path: string }[] = [
     { name: 'KILLER', path: '/killer' },
@@ -57,7 +57,7 @@ export class PlayersComponent implements OnInit {
     ] as FormControl;
   }
 
-  changePlayerQty(qty) {
+  changePlayerQty(qty: number) {
     this.playerGameForm.controls.playerQty.setValue(qty);
 
     // set validators for player QTY
