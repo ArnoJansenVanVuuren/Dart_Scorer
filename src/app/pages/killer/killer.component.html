@@ -2,7 +2,7 @@
   <ion-card class="ion-text-center">
     <ion-card-header color="secondary">
       <ion-card-subtitle>KILLER</ion-card-subtitle>
-      <ion-card-title>
+      <ion-card-title id="playerName">
         <strong>{{ playerGameStatus[playerNumber]?.name | uppercase }}</strong>
       </ion-card-title>
     </ion-card-header>
@@ -30,10 +30,8 @@
       </ion-grid>
 
       <!-- interface buttons -->
-      <ion-label class="ion-padding">
-        <strong>
-          Score left: {{ playerGameStatus[playerNumber]?.score }}</strong
-        >
+      <ion-label class="ion-padding" id="scoreLeft">
+        Score left: {{ playerGameStatus[playerNumber]?.score }}
       </ion-label>
       <br />
       <ion-button
