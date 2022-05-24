@@ -7,19 +7,28 @@
       </ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <!-- //--<> add content into grid -->
-      <div *ngFor="let i of [0, 1, 2]">
-        <ion-label
-          >Dart #{{ i + 1 }} : {{ currentPlayer3DartScores[i] }}
-        </ion-label>
-        <ion-chip
-          *ngIf="currentPlayer3DartScores[i] != null"
-          color="danger"
-          (click)="deleteFromArray(i)"
+      <ion-grid>
+        <ion-row
+          *ngFor="let i of [0, 1, 2]"
+          class="ion-justify-content-center ion-ali ion-align-items-center"
         >
-          Delete
-        </ion-chip>
-      </div>
+          <ion-col size="10">
+            <ion-item
+              >Dart #{{ i + 1 }} : {{ currentPlayer3DartScores[i] }}
+            </ion-item>
+          </ion-col>
+          <ion-col *ngIf="currentPlayer3DartScores[i] != null" size="2">
+            <ion-icon
+              name="close-circle-outline"
+              color="danger"
+              size="large"
+              (click)="deleteFromArray(i)"
+            >
+            </ion-icon>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
       <!-- interface buttons -->
       <ion-label class="ion-padding">
         <strong>

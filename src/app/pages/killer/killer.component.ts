@@ -32,7 +32,7 @@ export class KillerComponent {
   ionViewWillEnter() {
     //-- if no player route back to select player
     if (!this.gameService?.gameInfo) {
-      this.router.navigate(['players']);
+      //this.router.navigate(['players']);
     }
 
     //-- get player info
