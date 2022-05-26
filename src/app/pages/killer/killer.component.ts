@@ -5,7 +5,8 @@ import {
   DartScoringComponent,
   ScoreI,
 } from 'src/app/components/dart-scoring/dart-scoring.component';
-import { GameInfoI, GameService } from 'src/app/services/game.service';
+import { GameService } from 'src/app/services/game.service';
+import { AlertService } from 'src/app/services/alert.service';
 
 @Component({
   selector: 'app-killer',
@@ -20,19 +21,24 @@ export class KillerComponent {
   playerNumber = 0;
   currentPlayer3DartScores: number[] = [];
   currentPlayerPreviousScore: number = 0;
-  toastSelection?: string;
 
   constructor(
     private gameService: GameService,
     private router: Router,
     private modalController: ModalController,
-    public toastController: ToastController
+    public toastController: ToastController,
+    private alertService: AlertService
   ) {}
 
   ionViewWillEnter() {
     //-- if no player route back to select player
     if (!this.gameService?.gameInfo) {
       //this.router.navigate(['players']);
+      //--<> remove mock data
+      this.playerGameStatus.push({
+        name: 'arno',
+        score: 20,
+      });
     }
 
     //-- get player info
@@ -50,39 +56,15 @@ export class KillerComponent {
   }
 
   async presentToast(value: string) {
-    if (this.toastSelection === 'bust') {
-      const toast = await this.toastController.create({
-        message: 'Sorry ' + value + ' you BUSTED',
-        duration: 2500,
-        position: 'top',
-        color: 'danger',
-      });
-      toast.present();
-    } else if (this.toastSelection === 'win') {
-      const toast = await this.toastController.create({
-        message: value + ' is the WINNER!',
-        position: 'top',
-        color: 'success',
-        buttons: [
-          {
-            side: 'end',
-            text: 'New Game',
-            handler: () => {
-              this.router.navigate(['players']);
-            },
-          },
-          {
-            text: 'Done',
-            role: 'cancel',
-            handler: () => {
-              this.router.navigate(['welcome']);
-            },
-          },
-        ],
-      });
-      toast.present();
-    }
+    const toast = await this.toastController.create({
+      message: 'Sorry ' + value + ' you BUSTED',
+      duration: 3000,
+      position: 'top',
+      color: 'danger',
+    });
+    toast.present();
   }
+
   async showDartSelection() {
     const modal = await this.modalController.create({
       component: DartScoringComponent,
@@ -93,6 +75,8 @@ export class KillerComponent {
     this.processDartSelection(data as ScoreI);
   }
 
+  //--<> find a way to end the game
+
   processDartSelection(data: ScoreI) {
     this.currentPlayer3DartScores.push(data.value);
     if (
@@ -100,15 +84,35 @@ export class KillerComponent {
       data.doubleCheck == true
     ) {
       this.playerGameStatus[this.playerNumber].score -= data.value;
-      this.toastSelection = 'win';
-      this.presentToast(this.playerGameStatus[this.playerNumber].name);
+      this.alertService.presentAlertMultipleButtons({
+        cssClass: 'background',
+        header: 'WINNER',
+        subHeader: this.playerGameStatus[this.playerNumber].name,
+        message: 'You are the winner congratulations',
+        buttons: [
+          {
+            name: 'OK',
+            type: 'button',
+            label: 'OK',
+            value: 'OK',
+            handler: () => {
+              this.router.navigate(['players']);
+            },
+          },
+
+          // {name: string;
+          // type: string;
+          // label: string;
+          // value?: string;
+          // handler: any;},
+        ],
+      });
     } else if (
       this.playerGameStatus[this.playerNumber].score - data.value <
       2
     ) {
       this.playerGameStatus[this.playerNumber].score =
         this.currentPlayerPreviousScore;
-      this.toastSelection = 'bust';
       this.presentToast(this.playerGameStatus[this.playerNumber].name);
       this.playerDone();
     } else {
