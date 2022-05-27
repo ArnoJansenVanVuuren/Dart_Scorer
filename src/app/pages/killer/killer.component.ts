@@ -21,6 +21,7 @@ export class KillerComponent {
   playerNumber = 0;
   currentPlayer3DartScores: number[] = [];
   currentPlayerPreviousScore: number = 0;
+  winningDart: number = 0;
 
   constructor(
     private gameService: GameService,
@@ -29,16 +30,17 @@ export class KillerComponent {
     public toastController: ToastController,
     private alertService: AlertService
   ) {}
+  ngOnInit() {}
 
   ionViewWillEnter() {
     //-- if no player route back to select player
     if (!this.gameService?.gameInfo) {
       //this.router.navigate(['players']);
       //--<> remove mock data
-      this.playerGameStatus.push({
-        name: 'arno',
-        score: 20,
-      });
+      // this.playerGameStatus.push({
+      //   name: 'arno',
+      //   score: 20,
+      // });
     }
 
     //-- get player info
@@ -75,8 +77,6 @@ export class KillerComponent {
     this.processDartSelection(data as ScoreI);
   }
 
-  //--<> find a way to end the game
-
   processDartSelection(data: ScoreI) {
     this.currentPlayer3DartScores.push(data.value);
     if (
@@ -85,26 +85,24 @@ export class KillerComponent {
     ) {
       this.playerGameStatus[this.playerNumber].score -= data.value;
       this.alertService.presentAlertMultipleButtons({
-        cssClass: 'background',
         header: 'WINNER',
         subHeader: this.playerGameStatus[this.playerNumber].name,
         message: 'You are the winner congratulations',
+        backdropDismiss: false,
         buttons: [
           {
-            name: 'OK',
-            type: 'button',
-            label: 'OK',
-            value: 'OK',
+            text: 'New Game',
             handler: () => {
               this.router.navigate(['players']);
             },
           },
-
-          // {name: string;
-          // type: string;
-          // label: string;
-          // value?: string;
-          // handler: any;},
+          //--<> insert rematch button
+          // {
+          //   text: 'Rematch',
+          //   handler: () => {
+          //     this.router.navigate(['players']);
+          //   },
+          // },
         ],
       });
     } else if (
@@ -118,6 +116,13 @@ export class KillerComponent {
     } else {
       this.playerGameStatus[this.playerNumber].score -= data.value;
     }
+    this.winningDartCheck();
+  }
+
+  //--<> fix winning dart that there can be no res
+
+  winningDartCheck() {
+    this.winningDart = this.playerGameStatus[this.playerNumber].score / 2;
   }
 
   //-- cycle through single players
@@ -138,5 +143,6 @@ export class KillerComponent {
     this.playerGameStatus[this.playerNumber].score +=
       this.currentPlayer3DartScores[value];
     this.currentPlayer3DartScores.splice(value, 1);
+    this.winningDartCheck();
   }
 }
