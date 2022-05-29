@@ -49,6 +49,7 @@ export class PlayersComponent implements OnInit {
   }
   ngOnInit(): void {
     //--<> clear all player data when new game is started
+    console.log('player page game info', this.gameService.gameInfo);
   }
 
   getPlayerNameControl(player: string): FormControl {

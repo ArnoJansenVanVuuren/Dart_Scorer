@@ -36,20 +36,25 @@ export class KillerComponent {
     //-- if no player route back to select player
     if (!this.gameService?.gameInfo) {
       this.router.navigate(['players']);
+      //--<> remove mock data
+      // this.playerGameStatus.push(
+      //   {
+      //     name: 'arno',
+      //     score: 40,
+      //   },
+      //   {
+      //     name: 'pieter',
+      //     score: 60,
+      //   }
+      // );
     }
 
     //-- get player info
-    this.gameService.gameInfo?.playerNames.forEach((name) => {
-      if (name) {
-        this.playerGameStatus.push({
-          name,
-          score: +this.gameService.gameInfo.gameVariant,
-        });
-      }
-    });
+    this.populatePlayerInfo();
 
     this.currentPlayerPreviousScore =
       this.playerGameStatus[this.playerNumber]?.score;
+
     this.winningDartCheck();
   }
 
@@ -73,6 +78,22 @@ export class KillerComponent {
     this.processDartSelection(data as ScoreI);
   }
 
+  populatePlayerInfo() {
+    this.playerGameStatus = [];
+    this.currentPlayer3DartScores = [];
+    this.playerNumber = 0;
+    this.gameService.gameInfo?.playerNames.forEach((name) => {
+      if (name) {
+        this.playerGameStatus.push({
+          name,
+          score: +this.gameService.gameInfo.gameVariant,
+        });
+      }
+    });
+    console.log('playerGameStatus', this.playerGameStatus);
+    console.log('gameInfo', this.gameService.gameInfo);
+  }
+
   processDartSelection(data: ScoreI) {
     this.currentPlayer3DartScores.push(data.value);
     if (
@@ -92,13 +113,12 @@ export class KillerComponent {
               this.router.navigate(['players']);
             },
           },
-          //--<> insert rematch button
-          // {
-          //   text: 'Rematch',
-          //   handler: () => {
-          //     this.router.navigate(['players']);
-          //   },
-          // },
+          {
+            text: 'Rematch',
+            handler: () => {
+              this.populatePlayerInfo();
+            },
+          },
         ],
       });
     } else if (
@@ -117,7 +137,7 @@ export class KillerComponent {
 
   winningDartCheck() {
     this.winningDart = this.playerGameStatus[this.playerNumber].score / 2;
-
+    //--<> ERROR TypeError: Cannot read properties of undefined (reading 'score')
     if (this.winningDart - Math.floor(this.winningDart) == 0) {
       return this.winningDart;
     } else {
@@ -138,6 +158,8 @@ export class KillerComponent {
     }
     this.currentPlayer3DartScores = [];
     this.winningDart = 0;
+    this.currentPlayerPreviousScore =
+      this.playerGameStatus[this.playerNumber]?.score;
   }
 
   deleteFromArray(value: number) {
