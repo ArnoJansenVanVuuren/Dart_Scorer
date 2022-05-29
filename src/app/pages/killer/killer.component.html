@@ -8,8 +8,12 @@
     </ion-card-header>
     <ion-card-content>
       <ion-grid>
-        <ion-row *ngIf="winningDart < 21">
-          <ion-col>You can win with a double: {{ winningDart }}</ion-col>
+        <ion-row *ngIf="winningDart < 21 && winningDart != 0">
+          <ion-col>
+            <ion-item id="WinningDart"
+              >WIN it with DOUBLE {{ winningDart }}</ion-item
+            >
+          </ion-col>
         </ion-row>
         <ion-row
           *ngFor="let i of [0, 1, 2]"

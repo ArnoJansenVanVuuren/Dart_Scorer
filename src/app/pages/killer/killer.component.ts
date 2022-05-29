@@ -35,12 +35,7 @@ export class KillerComponent {
   ionViewWillEnter() {
     //-- if no player route back to select player
     if (!this.gameService?.gameInfo) {
-      //this.router.navigate(['players']);
-      //--<> remove mock data
-      // this.playerGameStatus.push({
-      //   name: 'arno',
-      //   score: 20,
-      // });
+      this.router.navigate(['players']);
     }
 
     //-- get player info
@@ -55,6 +50,7 @@ export class KillerComponent {
 
     this.currentPlayerPreviousScore =
       this.playerGameStatus[this.playerNumber]?.score;
+    this.winningDartCheck();
   }
 
   async presentToast(value: string) {
@@ -119,10 +115,14 @@ export class KillerComponent {
     this.winningDartCheck();
   }
 
-  //--<> fix winning dart that there can be no res
-
   winningDartCheck() {
     this.winningDart = this.playerGameStatus[this.playerNumber].score / 2;
+
+    if (this.winningDart - Math.floor(this.winningDart) == 0) {
+      return this.winningDart;
+    } else {
+      this.winningDart = 0;
+    }
   }
 
   //-- cycle through single players
@@ -137,6 +137,7 @@ export class KillerComponent {
       this.playerNumber = 0;
     }
     this.currentPlayer3DartScores = [];
+    this.winningDart = 0;
   }
 
   deleteFromArray(value: number) {
