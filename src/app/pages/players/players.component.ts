@@ -69,8 +69,10 @@ export class PlayersComponent implements OnInit {
           Validators.required,
           Validators.minLength(4),
         ]);
-        this.getPlayerNameControl(player.formName).updateValueAndValidity();
+      } else if (player.id > qty) {
+        this.getPlayerNameControl(player.formName).clearValidators();
       }
+      this.getPlayerNameControl(player.formName).updateValueAndValidity();
     });
   }
 
