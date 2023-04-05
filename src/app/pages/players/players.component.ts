@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {
-  FormGroup,
-  FormBuilder,
+  UntypedFormGroup,
+  UntypedFormBuilder,
   Validators,
-  FormControl,
+  UntypedFormControl,
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { GameInfoI, GameService } from 'src/app/services/game.service';
@@ -14,7 +14,7 @@ import { GameInfoI, GameService } from 'src/app/services/game.service';
   styleUrls: ['./players.component.scss'],
 })
 export class PlayersComponent implements OnInit {
-  playerGameForm: FormGroup;
+  playerGameForm: UntypedFormGroup;
   playerArr: string[] = [];
   availablePlayers: { id: number; formName: string; validator?: string }[] = [
     { id: 1, formName: 'player1', validator: '' },
@@ -29,7 +29,7 @@ export class PlayersComponent implements OnInit {
   ];
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private gameService: GameService,
     private router: Router
   ) {
@@ -52,10 +52,10 @@ export class PlayersComponent implements OnInit {
     console.log('player page game info', this.gameService.gameInfo);
   }
 
-  getPlayerNameControl(player: string): FormControl {
-    return (this.playerGameForm.get('playerNames') as FormGroup).controls[
+  getPlayerNameControl(player: string): UntypedFormControl {
+    return (this.playerGameForm.get('playerNames') as UntypedFormGroup).controls[
       player
-    ] as FormControl;
+    ] as UntypedFormControl;
   }
 
   changePlayerQty(qty: number) {
