@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { promise } from 'protractor';
 
 export interface GameInfoI {
   gameType: string;

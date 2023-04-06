@@ -1,24 +1,50 @@
-/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
-    "outDir": "./dist/out-tsc",
-    "sourceMap": true,
-    "declaration": false,
-    "downlevelIteration": true,
-    "experimentalDecorators": true,
-    "moduleResolution": "node",
-    "importHelpers": true,
-    "target": "ES2022",
-    "module": "es2020",
-    "lib": [
-      "es2018",
-      "dom"
-    ],
+    //--- Type Checking
     "strict": true,
-    "useDefineForClassFields": false
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    // "exactOptionalPropertyTypes": true, //---<>
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noPropertyAccessFromIndexSignature": true,
+    // "noUncheckedIndexedAccess": true, //---<>
+    "noUnusedLocals": true,
+    // "noUnusedParameters": true, //---<>
+    //--- Modules
+    "baseUrl": "./",
+    "module": "ESNext",
+    "moduleResolution": "node", //---<> (preferred = nodenext)
+    "paths": {
+      //--- Here easy access paths can be implemented
+    },
+    //--- Emit
+    "newLine": "lf",
+    "outDir": "./dist/out-tsc",
+    "removeComments": true,
+    //--- JavaScript Support
+    //--- Editor Support
+    //--- Interop Constraints
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    // "verbatimModuleSyntax": true, //---<> Typescript 5 required
+    //--- Backwards Compatibility
+    //--- Language and Environment
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": ["ESNext", "DOM"],
+    "target": "ESNext"
+    //--- Compiler Diagnostics
+    //--- Projects
+    //--- Output Formatting
+    //--- Completeness
+    //--- Command Line
+    //--- Watch Options
   },
+  "include": ["src/**/*.ts", "src/**/*.json", ".env"],
+  "exclude": ["node_modules"],
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
