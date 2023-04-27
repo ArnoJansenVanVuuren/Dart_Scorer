@@ -3,12 +3,12 @@
     <ion-card-header color="secondary">
       <ion-card-subtitle>KILLER</ion-card-subtitle>
       <ion-card-title id="playerName">
-        <strong>{{ playerGameStatus[playerNumber]?.name | uppercase }}</strong>
+        <strong>{{ playerGameStatus[playerNumber].name | uppercase }}</strong>
       </ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <ion-grid>
-        <ion-row *ngIf="winningDart < 21 && winningDart != 0">
+        <ion-row *ngIf="winningDart < 21 && winningDart !== 0">
           <ion-col>
             <ion-item id="WinningDart"
               >WIN it with DOUBLE {{ winningDart }}</ion-item
@@ -24,12 +24,12 @@
               >Dart #{{ i + 1 }} : {{ currentPlayer3DartScores[i] }}
             </ion-item>
           </ion-col>
-          <ion-col *ngIf="currentPlayer3DartScores[i] != null" size="2">
+          <ion-col *ngIf="currentPlayer3DartScores[i] !== null" size="2">
             <ion-icon
               name="close-circle-outline"
               color="danger"
               size="large"
-              (click)="deleteFromArray(i)"
+              (click)="deleteScore(i)"
             >
             </ion-icon>
           </ion-col>
@@ -38,11 +38,11 @@
 
       <!-- interface buttons -->
       <ion-label class="ion-padding" id="scoreLeft">
-        Score left: {{ playerGameStatus[playerNumber]?.score }}
+        Score left: {{ playerGameStatus[playerNumber].score }}
       </ion-label>
       <br />
       <ion-button
-        (click)="showDartSelection()"
+        (click)="showDartSelectionModal()"
         [disabled]="currentPlayer3DartScores.length === 3"
         >Choose</ion-button
       >
