@@ -20,8 +20,8 @@ export class KillerComponent {
   }[] = [];
   playerNumber = 0;
   currentPlayer3DartScores: number[] = [];
-  currentPlayerPreviousScore: number = 0;
-  winningDart: number = 0;
+  currentPlayerPreviousScore = 0;
+  winningDart = 0;
 
   constructor(
     private gameService: GameService,
@@ -30,7 +30,6 @@ export class KillerComponent {
     public toastController: ToastController,
     private alertService: AlertService
   ) {}
-  ngOnInit() {}
 
   ionViewWillEnter() {
     //-- if no player route back to select player
@@ -98,7 +97,7 @@ export class KillerComponent {
     this.currentPlayer3DartScores.push(data.value);
     if (
       this.playerGameStatus[this.playerNumber].score - data.value === 0 &&
-      data.doubleCheck == true
+      data.doubleCheck === true
     ) {
       this.playerGameStatus[this.playerNumber].score -= data.value;
       this.alertService.presentAlertMultipleButtons({
@@ -135,14 +134,13 @@ export class KillerComponent {
     this.winningDartCheck();
   }
 
-  winningDartCheck() {
+  winningDartCheck(): number {
     this.winningDart = this.playerGameStatus[this.playerNumber].score / 2;
     //--<> ERROR TypeError: Cannot read properties of undefined (reading 'score')
-    if (this.winningDart - Math.floor(this.winningDart) == 0) {
-      return this.winningDart;
-    } else {
+    if (!(this.winningDart - Math.floor(this.winningDart) === 0)) {
       this.winningDart = 0;
     }
+    return this.winningDart;
   }
 
   //-- cycle through single players
