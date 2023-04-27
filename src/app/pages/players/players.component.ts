@@ -28,6 +28,9 @@ export class PlayersComponent implements OnInit {
     { name: 'KILLER', path: '/killer' },
   ];
 
+  /**----------------------------------------------------------------
+   * @name  constructor
+   */
   constructor(
     private fb: UntypedFormBuilder,
     private gameService: GameService,
@@ -47,22 +50,37 @@ export class PlayersComponent implements OnInit {
       }),
     });
   }
+
+  /**----------------------------------------------------------------
+   * @name          ngOnInit
+   * @description   Update various values on component initialization
+   * @returns       {void}
+   */
   ngOnInit(): void {
     //--<> clear all player data when new game is started
     console.log('player page game info', this.gameService.gameInfo);
   }
 
+  /**----------------------------------------------------------------
+   * @name          getPlayerNameControl
+   * @description   Get player names
+   * @param         {string} player
+   * @returns       {UntypedFormControl}
+   */
   getPlayerNameControl(player: string): UntypedFormControl {
-    return (this.playerGameForm.get('playerNames') as UntypedFormGroup).controls[
-      player
-    ] as UntypedFormControl;
+    return (this.playerGameForm.get('playerNames') as UntypedFormGroup)
+      .controls[player] as UntypedFormControl;
   }
 
-  changePlayerQty(qty: number) {
-    this.playerGameForm.controls.playerQty.setValue(qty);
-
+  /**----------------------------------------------------------------
+   * @name          changePlayerQty
+   * @description   Change player quantity
+   * @param         {number} qty
+   * @returns       {void}
+   */
+  changePlayerQty(qty: number): void {
+    this.playerGameForm.controls['playerQty'].setValue(qty);
     // set validators for player QTY
-
     this.availablePlayers.forEach((player) => {
       if (player.id <= qty) {
         this.getPlayerNameControl(player.formName).setValidators([
@@ -76,25 +94,18 @@ export class PlayersComponent implements OnInit {
     });
   }
 
-  // add all player info and game info into service
-
-  startGame() {
-    const promise = new Promise((resolve, reject) => {});
+  /**----------------------------------------------------------------
+   * @name          startGame
+   * @description   Add all player info and game info into service and navigate to game
+   * @returns       {void}
+   */
+  startGame(): void {
     const gameSendInfo: GameInfoI = {
       gameType: this.playerGameForm.value.gameType,
       gameVariant: this.playerGameForm.value.gameVariant,
-      playerNames: [
-        this.playerGameForm.value.playerNames.player1,
-        this.playerGameForm.value.playerNames.player2,
-        this.playerGameForm.value.playerNames.player3,
-        this.playerGameForm.value.playerNames.player4,
-        this.playerGameForm.value.playerNames.player5,
-        this.playerGameForm.value.playerNames.player6,
-      ], //---<>dynamic way you insert into []
+      playerNames: Object.values(this.playerGameForm.value.playerNames),
     };
-
-    // after promise set router link
-
+    //--- After promise set router link
     this.gameService.gameInfoReceive(gameSendInfo).then(() => {
       this.router.navigate([
         this.availableGames.filter(

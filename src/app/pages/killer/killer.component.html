@@ -29,7 +29,7 @@
               name="close-circle-outline"
               color="danger"
               size="large"
-              (click)="deleteFromArray(i)"
+              (click)="deleteScore(i)"
             >
             </ion-icon>
           </ion-col>
@@ -42,7 +42,7 @@
       </ion-label>
       <br />
       <ion-button
-        (click)="showDartSelection()"
+        (click)="showDartSelectionModal()"
         [disabled]="currentPlayer3DartScores.length === 3"
         >Choose</ion-button
       >

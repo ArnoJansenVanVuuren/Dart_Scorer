@@ -23,6 +23,9 @@ export class KillerComponent {
   currentPlayerPreviousScore = 0;
   winningDart = 0;
 
+  /**----------------------------------------------------------------
+   * @name  constructor
+   */
   constructor(
     private gameService: GameService,
     private router: Router,
@@ -31,11 +34,16 @@ export class KillerComponent {
     private alertService: AlertService
   ) {}
 
-  ionViewWillEnter() {
+  /**----------------------------------------------------------------
+   * @name          ionViewWillEnter
+   * @description   Update various values before the components view enters
+   * @returns       {void}
+   */
+  ionViewWillEnter(): void {
     //-- if no player route back to select player
     if (!this.gameService?.gameInfo) {
       this.router.navigate(['players']);
-      //--<> remove mock data
+      //---<> remove mock data
       // this.playerGameStatus.push(
       //   {
       //     name: 'arno',
@@ -46,20 +54,27 @@ export class KillerComponent {
       //     score: 60,
       //   }
       // );
+      //---<> remove mock data
     }
-
-    //-- get player info
+    //--- Get player info
     this.populatePlayerInfo();
-
+    //--- Update visible score
     this.currentPlayerPreviousScore =
       this.playerGameStatus[this.playerNumber]?.score;
-
+    //--- Check if the player is able to finnish the game
     this.winningDartCheck();
   }
 
-  async presentToast(value: string) {
+  /**----------------------------------------------------------------
+   * @name          presentToast
+   * @description   Show a toast if payer busted
+   * @param         {string} playerName
+   * @returns       {Promise<void>}
+   */
+  //---<> maybe move to service to create toasts dynamically
+  async presentToast(playerName: string): Promise<void> {
     const toast = await this.toastController.create({
-      message: 'Sorry ' + value + ' you BUSTED',
+      message: 'Sorry ' + playerName + ' you BUSTED',
       duration: 3000,
       position: 'top',
       color: 'danger',
@@ -67,7 +82,12 @@ export class KillerComponent {
     toast.present();
   }
 
-  async showDartSelection() {
+  /**----------------------------------------------------------------
+   * @name          showDartSelectionModal
+   * @description   Show modal where player can select the score
+   * @returns       {Promise<void>}
+   */
+  async showDartSelectionModal(): Promise<void> {
     const modal = await this.modalController.create({
       component: DartScoringComponent,
     });
@@ -77,7 +97,12 @@ export class KillerComponent {
     this.processDartSelection(data as ScoreI);
   }
 
-  populatePlayerInfo() {
+  /**----------------------------------------------------------------
+   * @name          populatePlayerInfo
+   * @description   Populate current players info
+   * @returns       {void}
+   */
+  populatePlayerInfo(): void {
     this.playerGameStatus = [];
     this.currentPlayer3DartScores = [];
     this.playerNumber = 0;
@@ -93,13 +118,33 @@ export class KillerComponent {
     console.log('gameInfo', this.gameService.gameInfo);
   }
 
-  processDartSelection(data: ScoreI) {
-    this.currentPlayer3DartScores.push(data.value);
+  /**----------------------------------------------------------------
+   * @name          winningDartCheck
+   * @description   Check if players score can be made with one dart(double)
+   * @returns       {number}
+   */
+  winningDartCheck(): number {
+    this.winningDart = this.playerGameStatus[this.playerNumber].score / 2;
+    //--<> ERROR TypeError: Cannot read properties of undefined (reading 'score')
+    if (!(this.winningDart - Math.floor(this.winningDart) === 0)) {
+      this.winningDart = 0;
+    }
+    return this.winningDart;
+  }
+
+  /**----------------------------------------------------------------
+   * @name          Method Name
+   * @description   Description
+   * @param         {ScoreI} score Param1description
+   * @returns       {void}
+   */
+  processDartSelection(score: ScoreI): void {
+    this.currentPlayer3DartScores.push(score.value);
     if (
-      this.playerGameStatus[this.playerNumber].score - data.value === 0 &&
-      data.doubleCheck === true
+      this.playerGameStatus[this.playerNumber].score - score.value === 0 &&
+      score.doubleCheck === true
     ) {
-      this.playerGameStatus[this.playerNumber].score -= data.value;
+      this.playerGameStatus[this.playerNumber].score -= score.value;
       this.alertService.presentAlertMultipleButtons({
         header: 'WINNER',
         subHeader: this.playerGameStatus[this.playerNumber].name,
@@ -121,7 +166,7 @@ export class KillerComponent {
         ],
       });
     } else if (
-      this.playerGameStatus[this.playerNumber].score - data.value <
+      this.playerGameStatus[this.playerNumber].score - score.value <
       2
     ) {
       this.playerGameStatus[this.playerNumber].score =
@@ -129,20 +174,9 @@ export class KillerComponent {
       this.presentToast(this.playerGameStatus[this.playerNumber].name);
       this.playerDone();
     } else {
-      this.playerGameStatus[this.playerNumber].score -= data.value;
+      this.playerGameStatus[this.playerNumber].score -= score.value;
     }
     this.winningDartCheck();
-  }
-
-  winningDartCheck(): number {
-    this.winningDart = this.playerGameStatus[this.playerNumber].score / 2;
-    //--<> ERROR TypeError: Cannot read properties of undefined (reading 'score')
-    if (this.winningDart - Math.floor(this.winningDart) === 0) {
-      return this.winningDart;
-    } else {
-      this.winningDart = 0;
-    }
-    return this.winningDart;
   }
 
   //-- cycle through single players
@@ -162,7 +196,13 @@ export class KillerComponent {
       this.playerGameStatus[this.playerNumber]?.score;
   }
 
-  deleteFromArray(value: number) {
+  /**----------------------------------------------------------------
+   * @name          deleteScore
+   * @description   Delete one score form players selected scores
+   * @param         {number} value
+   * @returns       {void}
+   */
+  deleteScore(value: number): void {
     this.playerGameStatus[this.playerNumber].score +=
       this.currentPlayer3DartScores[value];
     this.currentPlayer3DartScores.splice(value, 1);
