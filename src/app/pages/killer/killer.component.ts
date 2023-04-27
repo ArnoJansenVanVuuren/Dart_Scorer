@@ -134,7 +134,7 @@ export class KillerComponent {
     this.winningDartCheck();
   }
 
-  winningDartCheck() {
+  winningDartCheck(): number {
     this.winningDart = this.playerGameStatus[this.playerNumber].score / 2;
     //--<> ERROR TypeError: Cannot read properties of undefined (reading 'score')
     if (this.winningDart - Math.floor(this.winningDart) === 0) {
@@ -142,6 +142,7 @@ export class KillerComponent {
     } else {
       this.winningDart = 0;
     }
+    return this.winningDart;
   }
 
   //-- cycle through single players
