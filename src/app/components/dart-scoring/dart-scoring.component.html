@@ -5,7 +5,7 @@
       <ion-col *ngFor="let scoreButton of scoringValues"
         ><ion-chip
           (click)="valueSelected(scoreButton.value)"
-          [disabled]="selectedValue != null"
+          [disabled]="selectedValue !== null"
         >
           <ion-label color="primary" outline="false">{{
             scoreButton.name
