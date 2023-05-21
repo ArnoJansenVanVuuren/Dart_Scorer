@@ -1,3 +1,13 @@
+/**
+ * Player component
+ *
+ * @file          players.component
+ * @description   All data pertaining to the players and witch game the would like to play lives here
+ * @author        Arno Jansen van Vuuren
+ * @since         2023 - 05 - 21
+ */
+
+
 import { Component, OnInit } from '@angular/core';
 import {
   UntypedFormGroup,
@@ -57,7 +67,7 @@ export class PlayersComponent implements OnInit {
    * @returns       {void}
    */
   ngOnInit(): void {
-    //--<> clear all player data when new game is started
+    //---<> clear all player data when new game is started
     console.log('player page game info', this.gameService.gameInfo);
   }
 

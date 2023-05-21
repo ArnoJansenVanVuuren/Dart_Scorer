@@ -1,3 +1,12 @@
+/**
+ * Killer Game Component
+ *
+ * @file          killer.component
+ * @description   Code and logic for players to play the killer dart game 
+ * @author        Arno Jansen van Vuuren
+ * @since         2023 - 05 - 21
+ */
+
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController, ToastController } from '@ionic/angular';
@@ -133,8 +142,8 @@ export class KillerComponent {
   }
 
   /**----------------------------------------------------------------
-   * @name          Method Name
-   * @description   Description
+   * @name          processDartSelection
+   * @description   Process the selected dart to know the next step
    * @param         {ScoreI} score Param1description
    * @returns       {void}
    */
