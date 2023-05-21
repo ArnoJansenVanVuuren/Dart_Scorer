@@ -2,7 +2,7 @@
  * Killer Game Component
  *
  * @file          killer.component
- * @description   Code and logic for players to play the killer dart game 
+ * @description   Code and logic for players to play the killer dart game
  * @author        Arno Jansen van Vuuren
  * @since         2023 - 05 - 21
  */
