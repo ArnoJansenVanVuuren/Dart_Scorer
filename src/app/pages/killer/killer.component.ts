@@ -188,9 +188,12 @@ export class KillerComponent {
     this.winningDartCheck();
   }
 
-  //-- cycle through single players
-
-  playerDone() {
+  /**----------------------------------------------------------------
+   * @name          playerDone
+   * @description   Move onto the next player
+   * @returns       {void}
+   */
+  playerDone(): void {
     if (
       this.playerGameStatus.length !== 0 &&
       this.playerNumber < this.playerGameStatus.length - 1
