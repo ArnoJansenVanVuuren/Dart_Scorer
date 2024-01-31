@@ -14,9 +14,9 @@ import { Injectable } from '@angular/core';
  * @description   Describes all info needed for a single game
  */
 export interface GameInfoI {
-  gameType: string;
+  gameType: 'KILLER';
   gameVariant: string;
-  playerNames: string[];
+  playerNames: (string | null)[];
 }
 
 @Injectable({

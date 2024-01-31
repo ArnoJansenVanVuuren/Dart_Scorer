@@ -49,6 +49,8 @@ export class KillerComponent {
    * @returns       {void}
    */
   ionViewWillEnter(): void {
+    console.log('gameInfo', this.gameService.gameInfo);
+
     //-- if no player route back to select player
     if (!this.gameService?.gameInfo) {
       this.router.navigate(['players']);
@@ -115,14 +117,14 @@ export class KillerComponent {
     this.playerGameStatus = [];
     this.currentPlayer3DartScores = [];
     this.playerNumber = 0;
-    this.gameService.gameInfo?.playerNames.forEach((name) => {
-      if (name) {
-        this.playerGameStatus.push({
-          name,
-          score: +this.gameService.gameInfo.gameVariant,
-        });
-      }
-    });
+    // this.gameService.gameInfo?.playerNames.forEach((name) => {
+    //   if (name) {
+    //     this.playerGameStatus.push({
+    //       name,
+    //       score: +this.gameService.gameInfo.gameVariant,
+    //     });
+    //   }
+    // });
     console.log('playerGameStatus', this.playerGameStatus);
     console.log('gameInfo', this.gameService.gameInfo);
   }
