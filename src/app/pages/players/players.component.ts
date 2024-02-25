@@ -19,34 +19,34 @@ import {
 import { Router } from '@angular/router';
 import { GameInfoI, GameService } from 'src/app/services/game.service';
 
+const gamesC = [
+  {
+    name: 'KILLER',
+    path: '/killer',
+  },
+] as const;
+
 @Component({
   selector: 'app-players',
   templateUrl: './players.component.html',
   styleUrls: ['./players.component.scss'],
 })
 export class PlayersComponent implements OnInit {
-  availablePlayers: { id: number; formName: string; validator?: string }[] = [
-    { id: 1, formName: 'player1', validator: '' },
-    { id: 2, formName: 'player2', validator: '' },
-    { id: 3, formName: 'player3', validator: '' },
-    { id: 4, formName: 'player4', validator: '' },
-    { id: 5, formName: 'player5', validator: '' },
-    { id: 6, formName: 'player6', validator: '' },
-  ];
-  availableGames: { name: string; path: string }[] = [
-    { name: 'KILLER', path: '/killer' },
-  ];
+  games = gamesC; //---<> check if necessary
 
+  //---<> form validation nor working properly
   //--- Forms
   playerGameForm = new FormGroup({
-    gameType: new FormControl<'KILLER' | null>(null, {
+    gameType: new FormControl<(typeof gamesC)[number]['name'] | null>(null, {
       validators: Validators.required,
-    }), //---<> simplify form control type
-    playerQty: new FormControl(0, { nonNullable: true }),
-    gameVariant: new FormControl<string | null>(null),
-    playerNames: new FormArray<FormControl<string>>([], {
-      validators: [Validators.required, Validators.minLength(4)],
     }),
+    gameVariant: new FormControl<string | null>(null),
+    playerNames: new FormArray<FormControl<string | null>>(
+      [new FormControl(null, { validators: Validators.required })],
+      {
+        validators: [Validators.required],
+      }
+    ),
   });
 
   /**----------------------------------------------------------------
@@ -68,36 +68,29 @@ export class PlayersComponent implements OnInit {
   }
 
   /**----------------------------------------------------------------
+   * @name          addPlayer
+   * @description   Add a extra player
+   * @returns       {void}
+   */
+  addPlayer(): void {
+    this.playerGameForm.controls.playerNames.controls.push(
+      new FormControl(null, { validators: Validators.required })
+    ); //---<> push form control
+    console.log(this.playerGameForm);
+    console.log(this.playerGameForm.value);
+
+    console.log(this.playerGameForm.valid);
+  }
+
+  /**----------------------------------------------------------------
    * @name          getPlayerNameControl
    * @description   Get player names
    * @param         {string} player
    * @returns       {UntypedFormControl}
    */
   getPlayerNameControl(player: string): UntypedFormControl {
-    return (this.playerGameForm.get('playerNames') as UntypedFormGroup)
+    return (this.playerGameForm.get('playerNames') as UntypedFormGroup) //---<> check type
       .controls[player] as UntypedFormControl;
-  }
-
-  /**----------------------------------------------------------------
-   * @name          changePlayerQty
-   * @description   Change player quantity
-   * @param         {number} qty
-   * @returns       {void}
-   */
-  changePlayerQty(qty: number): void {
-    this.playerGameForm.controls.playerQty.setValue(qty);
-    // set validators for player QTY
-    this.availablePlayers.forEach((player) => {
-      if (player.id <= qty) {
-        this.getPlayerNameControl(player.formName).setValidators([
-          Validators.required,
-          Validators.minLength(4),
-        ]);
-      } else if (player.id > qty) {
-        this.getPlayerNameControl(player.formName).clearValidators();
-      }
-      this.getPlayerNameControl(player.formName).updateValueAndValidity();
-    });
   }
 
   /**----------------------------------------------------------------
@@ -119,7 +112,7 @@ export class PlayersComponent implements OnInit {
       //--- After promise set router link
       this.gameService.gameInfoReceive(gameSendInfo).then(() => {
         this.router.navigate([
-          this.availableGames.filter(
+          gamesC.filter(
             (game) => game.name === this.playerGameForm.value.gameType
           )[0].path,
         ]);

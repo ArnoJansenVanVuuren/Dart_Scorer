@@ -1,9 +1,18 @@
-.player-count-button {
-  height: 50px;
-  padding: 20px;
+#player-card {
+  position: relative;
+  overflow: visible;
+}
+
+#player-count-button {
+  //---<> fix positioning
+  position: absolute;
+  // top: -50%;
+  right: 0;
+  height: 15px;
+  aspect-ratio: 1;
   border-radius: 50%;
-  p {
-    font-size: 18px;
-    margin: 0px;
-  }
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

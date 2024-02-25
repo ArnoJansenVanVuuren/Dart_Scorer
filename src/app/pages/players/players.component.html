@@ -1,66 +1,70 @@
 <ion-content>
-  <ion-card>
-    <form [formGroup]="playerGameForm">
+  <form [formGroup]="playerGameForm">
+    <ion-card style="margin-bottom: 20px">
       <!-- Game type selection -->
       <ion-item>
-        <ion-label position="floating">Choose A Game</ion-label>
-        <ion-select interface="popover" formControlName="gameType">
-          <ion-select-option *ngFor="let game of availableGames">{{
+        <ion-select
+          label="Choose A Game"
+          labelPlacement="floating"
+          interface="popover"
+          formControlName="gameType"
+        >
+          <ion-select-option *ngFor="let game of games">{{
             game.name
           }}</ion-select-option>
         </ion-select>
       </ion-item>
       <!-- Game Variant -->
       <ion-item *ngIf="playerGameForm.value.gameType === 'KILLER'">
-        <ion-label position="floating">Game Variant</ion-label>
-        <ion-select interface="popover" formControlName="gameVariant">
+        <ion-select
+          label="Game Variant"
+          labelPlacement="floating"
+          interface="popover"
+          formControlName="gameVariant"
+        >
           <ion-select-option value="301">301</ion-select-option>
           <ion-select-option value="501">501</ion-select-option>
           <ion-select-option value="701">701</ion-select-option>
         </ion-select>
       </ion-item>
+    </ion-card>
+    <ion-card id="player-card">
+      <!-- Add players -->
+      <ion-chip id="player-count-button" size="small" (click)="addPlayer()"
+        >+</ion-chip
+      >
       <!-- Player QTY selection -->
-      <ion-item *ngIf="playerGameForm.value.gameVariant">
-        <ion-grid class="ion-no-padding ion-no-margin">
-          <ion-row class="ion-align-items-center ion-justify-content-center">
-            <ion-col size="auto" class="ion-padding-end">
+      <ion-grid
+        class="ion-no-padding ion-no-margin"
+        *ngIf="playerGameForm.value.gameVariant"
+      >
+        <ion-row class="ion-align-items-center ion-justify-content-center">
+          <ion-col size="auto" class="ion-padding-end">
+            <ion-item>
               <ion-label>Players</ion-label>
-            </ion-col>
-            <ion-col>
-              <ion-grid class="ion-no-padding">
-                <ion-row class="ion-justify-content-evenly">
-                  <ion-col
-                    size="4"
-                    size-sm="auto"
-                    class="ion-text-center"
-                    *ngFor="let player of availablePlayers"
-                  >
-                    <ion-chip
-                      class="player-count-button"
-                      size="large"
-                      (click)="changePlayerQty(player.id)"
-                    >
-                      <p>{{ player.id }}</p>
-                    </ion-chip>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-item>
-      <ion-grid class="ion-no-padding">
-        <ion-row formArrayName="playerNames">
-          <ion-col size="12" size-sm="6" *ngFor="let player; of">
-            <!-- Players -->
-            <ion-item *ngIf="player.id <= playerGameForm.value.playerQty || 0">
-              <ion-label position="floating" color="primary">
-                Player {{ player.id }} Name
-              </ion-label>
-              <ion-input [formControlName]="player.formName"></ion-input>
             </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row formArrayName="playerNames">
+          <ion-col
+            size="12"
+            sizeMd="6"
+            *ngFor="
+              let player of playerGameForm.controls.playerNames.controls;
+              index as i
+            "
+          >
+            <!-- Players -->
+            <ion-item>
+              <ion-input
+                label="Player {{ i + 1 }} Name"
+                labelPlacement="floating"
+                [formControlName]="i"
+              ></ion-input>
+            </ion-item>
+            <!-- ---<> check -->
             <!-- Errors -->
-            <div
+            <!-- <div
               *ngIf="
                 getPlayerNameControl(player.formName).errors &&
                 getPlayerNameControl(player.formName).dirty
@@ -77,13 +81,13 @@
                   {{ error.value.requiredLength - error.value.actualLength }}
                 </ion-label>
               </div>
-            </div>
+            </div> -->
           </ion-col>
         </ion-row>
       </ion-grid>
       <ion-button (click)="startGame()" [disabled]="!playerGameForm.valid">
         Start
       </ion-button>
-    </form>
-  </ion-card>
+    </ion-card>
+  </form>
 </ion-content>
